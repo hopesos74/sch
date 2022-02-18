@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    @font-face {
+        font-family: 'LeferiPoint-WhiteObliqueA';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/LeferiPoint-WhiteObliqueA.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'Cafe24SsurroundAir';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24SsurroundAir.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'Cafe24Oneprettynight';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Oneprettynight.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'SDSamliphopangche_Outline';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/SDSamliphopangche_Outline.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    .main_title {
+        font-family: 'Cafe24Oneprettynight';
+        text-align: center;
+        color: white;
+        background: purple;
+        line-height: 50px;
+        margin: 0;
+        font-size: 1.5em;
+    }
+
+    .main_container {
+        align-items: stretch;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .container {
+        align-items: center;
+        padding: 1px;
+        margin: 1px;
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: center;
+        border: solid 1px    #F6F6F6;
+        height: 200px;
+
+        /* display: inline-flex; */
+    }
+
+    .item {
+        padding: 5px;
+        margin: 5px;
+        flex-grow: 0;
+        
+
+        /* flex-grow: 0; */
+        /* 기본값 */
+    }
+    .item:nth-child(1) {
+        width: 20px;
+    }
+    .item:nth-child(3) {
+        width: 200px;
+    }
+
+    p {
+        margin: 0.2em;
+    }
+
+    .sub {
+        color: #8D8D8D;
+        font-family: 'LeferiPoint-WhiteObliqueA';
+    }
+
+    .title {
+        font-family: 'Cafe24SsurroundAir';
+    }
+
+    .rank {
+        font-family: 'SDSamliphopangche_Outline';
+        font-size: 1.2em;
+    }
+</style>
+
+<body>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+    <script>
+        $.ajax({
+            method: "GET",
+
+            url: "https://myfirstbestseller.herokuapp.com/http://book.interpark.com/api/bestSeller.api?key=539A915AFFCE9EA590A963E64B4E89B905585E1F73CED8C0A2F0235A071182B7&categoryId=100&output=json",
+
+        })
+            .done(function (m) {
+                console.log(m);
+                //console.log(msg.documents[0].thumbnail);
+                var today = new Date(m.pubDate);
+                var yesterday = new Date(m.pubDate);
+                var sevenday = new Date(m.pubDate);
+
+                console.log(today);
+                console.log(today.toLocaleDateString() );
+
+                sevenday.setDate(today.getDate() - 7);
+                yesterday.setDate(today.getDate() - 1);
+
+                console.log(sevenday);
+                console.log(sevenday.getFullYear() +"."+ sevenday.getMonth() +"."+sevenday.getDate() );
+                console.log(yesterday);
+                console.log(yesterday.toLocaleDateString() );
+
+                $("#main_title").append("<strong>" + m.title + "</strong>  / ");
+                $("#main_title").append("<strong>" + sevenday.toLocaleDateString() + " ~ "+yesterday.toLocaleDateString() +"</strong> ");
+                for (i = 0; i < 30; i++) {
+                    $("#rank" + i).append("<p class='rank'>" + m.item[i].rank + "</p>");
+                    $("#image" + i).append("<a href='"+m.item[i].link+"' target='_blank'><img src='" + m.item[i].coverSmallUrl + "'></a>");
+                    $("#contents" + i).append("<p class='title'> " + m.item[i].title + "</p>");
+                    $("#contents" + i).append("<p class='sub'>" + m.item[i].author + "</p>");
+                    $("#contents" + i).append("<p class='sub'>" + m.item[i].publisher + "</p>");
+                    $("#contents" + i).append("<p class='sub'>" + m.item[i].pubDate + "</p>");
+                }
+            });
+
+
+        document.write("<div class='main_title' id='main_title'></div><p></p>");
+
+        document.write("<div class='main_container'>");
+        for (i = 0; i < 30; i++) {
+            document.write("<div class='container'>")
+            document.write("<div class='item' id='rank" + i + "'> </div>");
+            document.write("<div class='item' id='image" + i + "'> </div>");
+            document.write("<div class='item' id='contents" + i + "'> </div>");
+            document.write("</div>");
+        }
+        document.write("</div>");
+
+    </script>
+
+
+</body>
+
+</html>
