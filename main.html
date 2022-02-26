@@ -261,7 +261,7 @@
 
 
                     for (i = 0; i < 10; i++) {
-
+/*
                         const audiCnt1 = m.boxOfficeResult.dailyBoxOfficeList[i].audiCnt;
                         const audiCnt = audiCnt1.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 
@@ -270,17 +270,17 @@
 
                         const audiAcc1 = m.boxOfficeResult.dailyBoxOfficeList[i].audiAcc;
                         const audiAcc = audiAcc1.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-
+*/
 
 
                         //  $("#movie_image" + i).append("<a href='https://kobis.or.kr/kobis/business/mast/mvie/searchMovieList.do?dtTp=movie&dtCd=" + m.boxOfficeResult.dailyBoxOfficeList[i].movieCd + "' target='_blank'><img src='"+img+"'  style='width:100px; height:126px;'></a>");
                         $("#movie_contents" + i).append("<p class='title'> " + m.boxOfficeResult.dailyBoxOfficeList[i].rank + "위 " + "<a href='https://kobis.or.kr/kobis/business/mast/mvie/searchMovieList.do?dtTp=movie&dtCd=" + m.boxOfficeResult.dailyBoxOfficeList[i].movieCd + "' target='_blank'>" + m.boxOfficeResult.dailyBoxOfficeList[i].movieNm + "</p>");
                         $("#movie_contents" + i).append("<p class='sub'>개봉일자 : " + m.boxOfficeResult.dailyBoxOfficeList[i].openDt + "</p>");
-                        $("#movie_contents" + i).append("<p class='sub'>일일관객 : " + audiCnt + "(" + audiInten + ")</p>");
-                        $("#movie_contents" + i).append("<p class='sub'>누적관객 : " + audiAcc + "</p>");
+                        //$("#movie_contents" + i).append("<p class='sub'>일일관객 : " + audiCnt + "(" + audiInten + ")</p>");
+                        //$("#movie_contents" + i).append("<p class='sub'>누적관객 : " + audiAcc + "</p>");
 
-                        // $("#movie_contents" + i).append("<p class='sub'>일일관객 : " + m.boxOfficeResult.dailyBoxOfficeList[i].audiCnt + "("+m.boxOfficeResult.dailyBoxOfficeList[i].audiInten+")</p>");
-                        // $("#movie_contents" + i).append("<p class='sub'>누적관객 : " + m.boxOfficeResult.dailyBoxOfficeList[i].audiAcc + "</p>");
+                         $("#movie_contents" + i).append("<p class='sub'>일일관객 : " + m.boxOfficeResult.dailyBoxOfficeList[i].audiCnt + "("+m.boxOfficeResult.dailyBoxOfficeList[i].audiInten+")</p>");
+                         $("#movie_contents" + i).append("<p class='sub'>누적관객 : " + m.boxOfficeResult.dailyBoxOfficeList[i].audiAcc + "</p>");
 
                     }
                 });
