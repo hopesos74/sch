@@ -1,0 +1,21 @@
+{
+    "pageProps": {
+        "data": {
+            "weeklyBoxartUrls": {
+                "81000": {
+                    "id": "id",
+                    "url": "url"
+                },
+                "82000": {
+                    "id": "id",
+                    "url": "url"
+                }
+            }
+        },
+        "pathParams": {},
+        "pageText": {},
+        "geoGrain": "country",
+        "canonicalPath": null
+    },
+    "__N_SSG": true
+}
