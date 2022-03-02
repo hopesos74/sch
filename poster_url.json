@@ -43,7 +43,12 @@
                 "20218764": {
                     "movieCd": "20218764",
                     "url": "https://kobis.or.kr/kobis/business/mast/mvie/popupImg.do?imgURL=/common/mast/movie/2022/01/5578011a39274ae8960b002f4eb5ba6b.jpg"
+                },
+                "20190299": {
+                    "movieCd": "20190299",
+                    "url": "https://kobis.or.kr/kobis/business/mast/mvie/popupImg.do?imgURL=/common/mast/movie/2022/02/c3ba74af4e054f00a663a56a6f0a0e97.jpg"
                 }
+                
             }
         },
         "pathParams": {},
