@@ -1,41 +1,21 @@
 {
-
-	"result": [{
-
-		"id": "1",
-
-		"entryName": "장원영",
-
-		"title": "이쁘다",
-
-		"thumbnail": "http://supercup.co.kr/entryImg/d11be93604df.gif",
-
-		"description": "이쁘게 움직이는 장원영 움짤",
-
-		"regDate": "2018-12-14 15:15:59",
-
-		"url": "http://supercup.co.kr/entry/detail?type=girlIdol&entryId=131"
-
-	}, {
-
-		"id": "2",
-
-		"entryName": "사나",
-
-		"title": "귀엽다",
-
-		"thumbnail": "http://supercup.co.kr/entryImg/bd7b77a5fc7c.jpg",
-
-		"description": "시상식 사나 클라스",
-
-		"regDate": "2018-11-19 13:30:44",
-
-		"url": "http://supercup.co.kr/entry/detail?type=girlIdol&entryId=56"
-
-	}],
-
-	"code": "100",
-
-	"msg": "success"
-
+    "pageProps": {
+        "data": {
+            "weeklyBoxartUrls": {
+                "81000": {
+                    "id": "id",
+                    "url": "url"
+                },
+                "82000": {
+                    "id": "id",
+                    "url": "url"
+                }
+            }
+        },
+        "pathParams": {},
+        "pageText": {},
+        "geoGrain": "country",
+        "canonicalPath": null
+    },
+    "__N_SSG": true
 }
