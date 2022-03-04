@@ -213,7 +213,7 @@
     </script>
 
     <script>
-        document.write("<div class='top'>" + year + "-" + month1 + "-" + day1 + "</div>")
+        document.write("<div class='top'><p align='center'> 오늘의 TOP 10 " + year + "-" + month1 + "-" + day1 + "</p></div>")
     </script>
 
 
@@ -285,7 +285,7 @@
 
                     $.ajax({
                         method: "GET",
-                        url: "https://hopesos74.github.io/sch/20220303.json"
+                        url: "https://hopesos74.github.io/sch/202203.json"
                     })
                         .done(function (p) {
                             console.log(p);
@@ -478,9 +478,8 @@
 
 
 
-
-
-        <script>
+        <!--
+  <script>
             $.ajax({
                 method: "GET",
                 url: "https://myfirstbestseller.herokuapp.com/https://sports.daum.net/prx/hermes/api/team/rank.json?leagueCode=epl&seasonKey=20212022&page=1&pageSize=100",
@@ -523,6 +522,9 @@
             document.write("</div>");
 
         </script>
+
+-->
+
 
 
     </div>
