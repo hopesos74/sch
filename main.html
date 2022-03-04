@@ -126,7 +126,7 @@
     }
 
     .item:nth-child(2) {
-        width: 165px;
+        width: 180px;
     }
 
     p {
@@ -141,6 +141,7 @@
 
     .title {
         font-family: 'Cafe24SsurroundAir';
+        font-size: 0.9em;
     }
 
     .sub_title {
@@ -149,7 +150,7 @@
         justify-content: center;
         border: solid 1px #F6F6F6;
         text-align: center;
-        font-size: 0.9em;
+        font-size: 0.8em;
         height: 50px;
         display: flex;
         flex-wrap: nowrap;
@@ -283,38 +284,39 @@
                     $("#movie_period").append("(영화진흥위원회 : " + yesterday1 + ")");
 
                     $.ajax({
-                            method: "GET",
-                            url: "https://hopesos74.github.io/sch/202203p.json"
-                        })
-                            .done(function (p) {
-                                console.log(p);
+                        method: "GET",
+                        url: "https://hopesos74.github.io/sch/20220303.json"
+                    })
+                        .done(function (p) {
+                            console.log(p);
 
-                    for (i = 0; i < 10; i++) {
+                            for (i = 0; i < 10; i++) {
 
-                        function numberWithCommas(x) {
-                            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                        }
+                                function numberWithCommas(x) {
+                                    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                }
 
-                        var id = m.boxOfficeResult.dailyBoxOfficeList[i].movieCd;
-                        console.log(id);
-                       
-                        var poster = p.pageProps.data.weeklyBoxartUrls[id].url;
-                        console.log(poster);
-                        
-                      //  console.log(poster);
-                       // $("#movie_image" + i).append("<a href='https://www.imdb.com/title/" + m.items[i].id + "' target='_blank'><img src='" + box_image + "' style='width:100px; height:126px;'></a>");
-                        $("#movie_image" + i).append("<a href='https://kobis.or.kr/kobis/business/mast/mvie/searchMovieList.do?dtTp=movie&dtCd=" + m.boxOfficeResult.dailyBoxOfficeList[i].movieCd + "' target='_blank'><img src='"+poster+"' style='width:100px; height:126px;'></a>");
-                        $("#movie_contents" + i).append("<p class='title'> " + m.boxOfficeResult.dailyBoxOfficeList[i].rank + "위 " + "<a href='https://kobis.or.kr/kobis/business/mast/mvie/searchMovieList.do?dtTp=movie&dtCd=" + m.boxOfficeResult.dailyBoxOfficeList[i].movieCd + "' target='_blank'>" + m.boxOfficeResult.dailyBoxOfficeList[i].movieNm + "</p>");
-                        $("#movie_contents" + i).append("<p class='sub'>개봉일자 : " + m.boxOfficeResult.dailyBoxOfficeList[i].openDt + "</p>");
-                        //  $("#movie_contents" + i).append("<p class='sub'>일일관객 : " + audiCnt + "(" + audiInten + ")</p>");
-                        //$("#movie_contents" + i).append("<p class='sub'>누적관객 : " + audiAcc + "</p>");
+                                var id = m.boxOfficeResult.dailyBoxOfficeList[i].movieCd;
+                                console.log(id);
 
-                        $("#movie_contents" + i).append("<p class='sub'>일일관객 : " + numberWithCommas(m.boxOfficeResult.dailyBoxOfficeList[i].audiCnt) + "(" + numberWithCommas(m.boxOfficeResult.dailyBoxOfficeList[i].audiInten) + ")</p>");
-                        $("#movie_contents" + i).append("<p class='sub'>누적관객 : " + numberWithCommas(m.boxOfficeResult.dailyBoxOfficeList[i].audiAcc) + "</p>");
+                                var poster = p.pageProps.data.weeklyBoxartUrls[id].url;
+                                console.log(poster);
 
-                    }
+                                //  console.log(poster);
+                                // $("#movie_image" + i).append("<a href='https://www.imdb.com/title/" + m.items[i].id + "' target='_blank'><img src='" + box_image + "' style='width:100px; height:126px;'></a>");
+                                $("#movie_image" + i).append("<a href='https://kobis.or.kr/kobis/business/mast/mvie/searchMovieList.do?dtTp=movie&dtCd=" + m.boxOfficeResult.dailyBoxOfficeList[i].movieCd + "' target='_blank'><img src='" + poster + "' style='width:100px; height:126px;'></a>");
+                                $("#movie_contents" + i).append("<p class='title'> " + m.boxOfficeResult.dailyBoxOfficeList[i].rank + "위</p>");
+                                $("#movie_contents" + i).append("<p class='title'> " + m.boxOfficeResult.dailyBoxOfficeList[i].movieNm + "</p>");
+                                $("#movie_contents" + i).append("<p class='sub'>개봉일자 : " + m.boxOfficeResult.dailyBoxOfficeList[i].openDt + "</p>");
+                                //  $("#movie_contents" + i).append("<p class='sub'>일일관객 : " + audiCnt + "(" + audiInten + ")</p>");
+                                //$("#movie_contents" + i).append("<p class='sub'>누적관객 : " + audiAcc + "</p>");
 
-                });
+                                $("#movie_contents" + i).append("<p class='sub'>일일관객 : " + numberWithCommas(m.boxOfficeResult.dailyBoxOfficeList[i].audiCnt) + "(" + numberWithCommas(m.boxOfficeResult.dailyBoxOfficeList[i].audiInten) + ")</p>");
+                                $("#movie_contents" + i).append("<p class='sub'>누적관객 : " + numberWithCommas(m.boxOfficeResult.dailyBoxOfficeList[i].audiAcc) + "</p>");
+
+                            }
+
+                        });
 
 
                 });
@@ -323,7 +325,7 @@
             document.write("<div class='sub_title' id='movie_period'></div>")
             for (i = 0; i < 10; i++) {
                 document.write("<div class='subject'>")
-                  document.write("<div class='item' id='movie_image" + i + "'> </div>");
+                document.write("<div class='item' id='movie_image" + i + "'> </div>");
                 document.write("<div class='item' id='movie_contents" + i + "'> </div>");
                 document.write("</div>");
             }
@@ -350,7 +352,8 @@
                     for (i = 0; i < 10; i++) {
                         var box_image = m.items[i].image;
                         $("#box_image" + i).append("<a href='https://www.imdb.com/title/" + m.items[i].id + "' target='_blank'><img src='" + box_image + "' style='width:100px; height:126px;'></a>");
-                        $("#box_contents" + i).append("<p class='title'> " + m.items[i].rank + "위 " + m.items[i].title + "</p>");
+                        $("#box_contents" + i).append("<p class='title'> " + m.items[i].rank + "위 </p>");
+                        $("#box_contents" + i).append("<p class='title'> " + m.items[i].title + "</p>");
                         $("#box_contents" + i).append("<p class='sub'>gross : " + m.items[i].gross + "</p>");
                         $("#box_contents" + i).append("<p class='sub'>weekend : " + m.items[i].weekend + "</p>");
                         $("#box_contents" + i).append("<p class='sub'>weeks : " + m.items[i].weeks + "</p>");
@@ -452,7 +455,8 @@
                         var pubDate = "" + m.item[i].pubDate + "";
                         pubDate = pubDate.replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3');
                         $("#book_image" + i).append("<a href='" + m.item[i].link + "' target='_blank'><img src='" + m.item[i].coverSmallUrl + "'></a>");
-                        $("#book_contents" + i).append("<p class='title'> " + m.item[i].rank + "위 " + m.item[i].title + "</p>");
+                        $("#book_contents" + i).append("<p class='title'> " + m.item[i].rank + "위 </p>");
+                        $("#book_contents" + i).append("<p class='title'> " + m.item[i].title + "</p>");
                         $("#book_contents" + i).append("<p class='sub'>" + m.item[i].author + "</p>");
                         $("#book_contents" + i).append("<p class='sub'>" + m.item[i].publisher + "</p>");
                         $("#book_contents" + i).append("<p class='sub'>" + pubDate + "</p>");
@@ -475,49 +479,50 @@
 
 
 
-        
-<script>
-    $.ajax({
-        method: "GET",
-        url: "https://myfirstbestseller.herokuapp.com/https://sports.daum.net/prx/hermes/api/team/rank.json?leagueCode=epl&seasonKey=20212022&page=1&pageSize=100",
 
-    })
-        .done(function (m) {
+        <script>
+            $.ajax({
+                method: "GET",
+                url: "https://myfirstbestseller.herokuapp.com/https://sports.daum.net/prx/hermes/api/team/rank.json?leagueCode=epl&seasonKey=20212022&page=1&pageSize=100",
 
-            console.log(m);
+            })
+                .done(function (m) {
 
-
+                    console.log(m);
 
 
-            $("#pl_period").append("프리미어리그 순위<br>");
-            $("#pl_period").append("(" + yesterday1 + " 기준)");
 
-            for (i = 0; i < 20; i++) {
 
-                // var pubDate = "" + m.item[i].pubDate + "";
-                // pubDate = pubDate.replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3');
+                    $("#pl_period").append("프리미어리그 순위<br>");
+                    $("#pl_period").append("(" + yesterday1 + " 기준)");
 
-                // $("#album_rank" + i).append("<p class='rank'>" + m.item[i].rank + "</p>");
-                $("#pl_image" + i).append("<img src='" + m.list[i].imageUrl + "' style='width:90px; height:90px;'>");
-                $("#pl_contents" + i).append("<p class='title'> " + m.list[i].rank.rank + "위 " + m.list[i].shortName + " 승점" + m.list[i].rank.pts + "</p>");
-                $("#pl_contents" + i).append("<p class='sub'> " + m.list[i].rank.game + "경기 " + m.list[i].rank.win + "승 " + m.list[i].rank.draw + "무 " + m.list[i].rank.loss + "패 </p>");
-                $("#pl_contents" + i).append("<p class='sub'> " + m.list[i].rank.gf + "득점 " + m.list[i].rank.ga + "실점 " + m.list[i].rank.gd + "득실 </p>");
+                    for (i = 0; i < 20; i++) {
 
+                        // var pubDate = "" + m.item[i].pubDate + "";
+                        // pubDate = pubDate.replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3');
+
+                        // $("#album_rank" + i).append("<p class='rank'>" + m.item[i].rank + "</p>");
+                        $("#pl_image" + i).append("<img src='" + m.list[i].imageUrl + "' style='width:90px; height:90px;'>");
+                        $("#pl_contents" + i).append("<p class='title'> " + m.list[i].rank.rank + "위 </p>");
+                        $("#pl_contents" + i).append("<p class='title'> " + m.list[i].shortName + " 승점" + m.list[i].rank.pts + "</p>");
+                        $("#pl_contents" + i).append("<p class='sub'> " + m.list[i].rank.game + "경기 " + m.list[i].rank.win + "승 " + m.list[i].rank.draw + "무 " + m.list[i].rank.loss + "패 </p>");
+                        $("#pl_contents" + i).append("<p class='sub'> " + m.list[i].rank.gf + "득점 " + m.list[i].rank.ga + "실점 " + m.list[i].rank.gd + "득실 </p>");
+
+                    }
+                });
+
+
+            document.write("<div class='subject_container'>");
+            document.write("<div class='sub_title' id='pl_period'></div>")
+            for (i = 0; i < 10; i++) {
+                document.write("<div class='subject'>")
+                document.write("<div class='item' id='pl_image" + i + "'> </div>");
+                document.write("<div class='item' id='pl_contents" + i + "'> </div>");
+                document.write("</div>");
             }
-        });
+            document.write("</div>");
 
-
-    document.write("<div class='subject_container'>");
-    document.write("<div class='sub_title' id='pl_period'></div>")
-    for (i = 0; i < 10; i++) {
-        document.write("<div class='subject'>")
-        document.write("<div class='item' id='pl_image" + i + "'> </div>");
-        document.write("<div class='item' id='pl_contents" + i + "'> </div>");
-        document.write("</div>");
-    }
-    document.write("</div>");
-
-</script>
+        </script>
 
 
     </div>
