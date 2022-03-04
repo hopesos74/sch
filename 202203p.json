@@ -1,0 +1,89 @@
+{
+    "pageProps": {
+        "data": {
+            "weeklyBoxartUrls": {
+
+                "20212973": {
+                    "movieCd": "20212973",
+                    "movieNm": "더배트맨", 
+                    "url": "https://movie-phinf.pstatic.net/20220214_120/1644825641315cvVKI_JPEG/movie_image.jpg"
+                }, 
+                "20211200": {
+                    "movieCd": "20211200",
+                    "movieNm": "언차티드", 
+                    "url": "https://movie-phinf.pstatic.net/20220209_134/1644383194692LvFfD_JPEG/movie_image.jpg"
+                }, 
+                "20223278": {
+                    "movieCd": "20223278",
+                    "movieNm": "극장판 주술회전 0",
+                    "url": "https://movie-phinf.pstatic.net/20220217_242/1645084631470w6PTw_JPEG/movie_image.jpg"
+                }, 
+                "20212741": {
+                    "movieCd": "20212741",
+                    "movieNm": "안테벨룸",
+                    "url": "https://movie-phinf.pstatic.net/20220120_114/1642670007393r2KR2_JPEG/movie_image.jpg"
+                }, 
+                "20208006": {
+                    "movieCd": "20208006",
+                    "movieNm": "인민을 위해 복무하라",
+                    "url": "https://movie-phinf.pstatic.net/20220223_93/1645596742589KTCfc_JPEG/movie_image.jpg"
+                }, 
+                "20201965": {
+                    "movieCd": "20201965",
+                    "movieNm": "해적: 도깨비 깃발",
+                    "url": "https://movie-phinf.pstatic.net/20220126_99/16431781439406dpnP_JPEG/movie_image.jpg"
+                }, 
+                "20223743": {
+                    "movieCd": "20223743",
+                    "movieNm": "나이트메어 앨리",
+                    "url": "https://movie-phinf.pstatic.net/20220216_25/1644979622768ayXMn_JPEG/movie_image.jpg"
+                }, 
+                "20223308": {
+                    "movieCd": "20223308",
+                    "movieNm": "옥토넛 - 해저동굴 대탈출",
+                    "url": "https://movie-phinf.pstatic.net/20220125_255/1643093997540IkJaG_JPEG/movie_image.jpg"
+                }, 
+                "20210028": {
+                    "movieCd": "20210028",
+                    "movieNm": "스파이더맨 : 노웨이홈",
+                    "url": "https://movie-phinf.pstatic.net/20211215_297/1639556766975z0641_JPEG/movie_image.jpg"
+                }, 
+                "20218764": {
+                    "movieCd": "20218764",
+                    "movieNm": "씽2게더",
+                    "url": "https://movie-phinf.pstatic.net/20211231_136/1640927037740RqKuo_JPEG/movie_image.jpg"
+                },
+                "20190299": {
+                    "movieCd": "20190299",
+                    "movieNm": "이상한 나라의 수학자",
+                    "url": "https://movie-phinf.pstatic.net/20220210_27/16444726389021AWu6_JPEG/movie_image.jpg"
+                },
+                "20188441": {
+                    "movieCd": "20188441",
+                    "movieNm": "킹메이커",
+                    "url": "https://movie-phinf.pstatic.net/20220126_227/1643182432127j8nuq_JPEG/movie_image.jpg"
+                },
+                "20205443": {
+                    "movieCd": "20205443",
+                    "movieNm": "나일 강의 죽음",
+                    "url": "https://movie-phinf.pstatic.net/20220209_35/1644391235678J9KBy_JPEG/movie_image.jpg"
+                }
+                ,
+                "20223092": {
+                    "movieCd": "20205443",
+                    "movieNm": "에이핑크",
+                    "url": "https://hopesos74.github.io/sch/img/20223902.jpg"
+                }
+                
+
+                
+            }
+        },
+        "pathParams": {},
+        "pageText": {},
+        "geoGrain": "country",
+        "canonicalPath": null
+    },
+    "__N_SSG": true
+}
+
