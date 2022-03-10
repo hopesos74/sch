@@ -92,9 +92,21 @@
                     "movieCd": "20212708",
                     "movieNm": "시라노 ",
                     "url": "https://www.kobis.or.kr/common/mast/movie/2022/01/6e16c01724614d7da9429b61d15f9c61.jpg"
+                },
+                "20223828": {
+                    "movieCd": "20223828",
+                    "movieNm": "나의 히어로 아카데미 ",
+                    "url": "https://www.kobis.or.kr/common/mast/movie/2022/02/f158055edf304e3c8a448fd400e482fe.jpg"
+                },
+                "20223953": {
+                    "movieCd": "20223953",
+                    "movieNm": "블랙라이트",
+                    "url": "https://www.kobis.or.kr/common/mast/movie/2022/02/61d1ff33c2cf401485b7cd6bb62bce7c.jpg"
                 }
 
                 
+                
+
             }
         },
         "pathParams": {},
