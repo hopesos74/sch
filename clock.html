@@ -58,32 +58,56 @@
 
 
         @font-face {
-    font-family: 'MaplestoryOTFBold';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
+            font-family: 'MaplestoryOTFBold';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
 
-@font-face {
-    font-family: 'NEXON Lv1 Gothic OTF';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
+        @font-face {
+            font-family: 'NEXON Lv1 Gothic OTF';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
 
-@font-face {
-    font-family: 'GmarketSansMedium';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
+        @font-face {
+            font-family: 'GmarketSansMedium';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
 
-@font-face {
-    font-family: 'HallymGothic-Regular';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2204@1.0/HallymGothic-Regular.woff2') format('woff2');
-    font-weight: 400;
-    font-style: normal;
-}
+        @font-face {
+            font-family: 'HallymGothic-Regular';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2204@1.0/HallymGothic-Regular.woff2') format('woff2');
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'IBMPlexSansKR-Regular';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'MonoplexKR-Regular';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_Monoplex-kr@1.0/MonoplexKR-Regular.woff2') format('woff2');
+            font-weight: 400;
+            font-style: normal;
+        }
+
+
+        @font-face {
+            font-family: 'KorailRoundGothicBold';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2212@1.0/KorailRoundGothicBold.woff2') format('woff2');
+            font-weight: 700;
+            font-style: normal;
+        }
+
+
 
         .flex-container {
             width: 100%;
@@ -107,10 +131,15 @@
         }
 
         .main_title {
-            font-family: 'HallymGothic-Regular';
+            font-family: 'KorailRoundGothicBold';
             color: gray;
-            font-size: 10em;
+            font-size: 11em;
+        }
 
+        .sub_title {
+            font-family: 'KOTRA_GOTHIC';
+            color: gray;
+            font-size: 6em;
         }
     </style>
 </head>
@@ -119,11 +148,13 @@
 
 
     <div class="flex-container">
+
         <div style="text-align: center;">
-            <span id="clock" class="main_title">clock</span>
-            <!-- <span id="clock" style="color:gray; font-size: 200px;">clock</span> -->
-            <!-- <span id="apm" style="color:gray; font-size: 50px;">ampm</span> -->
+            <span id="clock" class="main_title">clock</span><br>
+            <span id="apm" class="sub_title">apm</span>
         </div>
+
+    </div>
     </div>
 
 
@@ -135,19 +166,20 @@
         var Target_apm = document.getElementById("apm");
         function clock() {
             var time = new Date();
+            var years = time.getFullYear();
+            var month = time.getMonth();
+            var date = time.getDate();
+            var day = time.getDay();
+            var week = ['일', '월', '화', '수', '목', '금', '토'];
+
             var hours = time.getHours();
             var minutes = time.getMinutes();
             var seconds = time.getSeconds();
-            /*  var AmPm ="AM";
-              if(hours > 12){   
-                  var AmPm ="PM";
-                  hours %= 12;
-              }
-            */
+
             Target.innerText =
                 `${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
 
-            // Target_apm.innerText = `${AmPm}`;
+            Target_apm.innerText = `${years}.${month + 1}.${date}(${week[day]}) `;
 
         }
         clock();
