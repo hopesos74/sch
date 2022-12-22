@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <title>clock2</title>
     <!-- Custom styles for this template -->
-  <link href="css/small-business.css" rel="stylesheet">
+    <link href="css/small-business.css" rel="stylesheet">
 
-  <script src="https://kit.fontawesome.com/db86b98b0a.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/db86b98b0a.js" crossorigin="anonymous"></script>
 
-  <link rel="stylesheet" href="css/weather-icons-wind.css">
-  <link rel="stylesheet" href="css/weather-icons-wind.min.css">
-  <link rel="stylesheet" href="css/weather-icons.css">
+    <link rel="stylesheet" href="css/weather-icons-wind.css">
+    <link rel="stylesheet" href="css/weather-icons-wind.min.css">
+    <link rel="stylesheet" href="css/weather-icons.css">
 
     <style>
         @font-face {
@@ -117,6 +117,13 @@
         }
 
 
+        @font-face {
+            font-family: 'GangwonEdu_OTFBoldA';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
 
         .flex-container {
             width: 100%;
@@ -150,10 +157,17 @@
             color: gray;
             font-size: 6em;
         }
+
         .weather {
-            font-family: 'KOTRA_GOTHIC';
+            font-family: 'GangwonEdu_OTFBoldA';
             color: gray;
-            font-size: 3em;
+            font-size: 2em;
+        }
+
+        .s_weather {
+            font-family: 'GangwonEdu_OTFBoldA';
+            color: gray;
+            font-size: 1em;
         }
     </style>
 </head>
@@ -161,7 +175,7 @@
 <body>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"
         integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    
+
     <script>
 
         if (navigator.geolocation) {
@@ -176,14 +190,27 @@
                 })
                     .done(function (m) {
                         console.log(m);
-                        $("#temp").append(m.hourly[0].temp + "℃ &nbsp;" + m.hourly[0].humidity + "%&nbsp;");
-                       // $("#top_temp").append(m.hourly[0].temp + "° " + m.hourly[0].humidity + "%&nbsp;");
+                        $("#temp").append("&nbsp;<i class='wi wi-owm-" + m.hourly[0].weather[0].id + "'></i>  ");
+                        $("#temp").append(m.hourly[0].temp + "°&nbsp;(" + m.daily[0].temp.min + "°~ " + m.daily[0].temp.max + "°)  " + m.hourly[0].humidity + "<i class='s_weather'>%</i>&nbsp; " + m.hourly[0].wind_speed + "m/s  ");
+                        // $("#top_temp").append(m.hourly[0].temp + "° " + m.hourly[0].humidity + "%&nbsp;");
                         //$("#temp").append("<img src='https://openweathermap.org/img/wn/"+ m.hourly[0].weather[0].icon +".png'>");
-                        $("#temp").append("&nbsp;<i class='wi wi-owm-" + m.hourly[0].weather[0].id + "'></i>");
-                       // $("#top_temp").append("<i class='wi wi-owm-" + m.hourly[0].weather[0].id + "'></i>");
-                        $("#temp").append("&nbsp;" + m.hourly[0].weather[0].description + "<br>");
-                      //  $("#temp").append("최고 : " + m.daily[0].temp.max + "℃ &nbsp;최저 : " + m.daily[0].temp.min + "℃&nbsp;");
+
+                        // $("#top_temp").append("<i class='wi wi-owm-" + m.hourly[0].weather[0].id + "'></i>");
+                        //$("#temp").append("&nbsp;" + m.hourly[0].weather[0].description + "<br>");
+                        //  $("#temp").append("최고 : " + m.daily[0].temp.max + "℃ &nbsp;최저 : " + m.daily[0].temp.min + "℃&nbsp;");
                     });
+
+                $.ajax({
+                    method: "GET",
+                    url: "https://dapi.kakao.com/v2/local/geo/coord2address.json?x=" + y + "&y=" + x + "&input_coord=WGS84",
+                    headers: { Authorization: "KakaoAK eaba352137de06ddce13c272d9ce9756" }
+                })
+                    .done(function (msg) {
+                        console.log(msg);
+                        $("#region").append(msg.documents[0].address.region_1depth_name);
+
+                    });
+
             });
         } else {
             alert("이 브라우저에서는 Geolocation이 지원되지 않습니다.")
@@ -193,14 +220,15 @@
     </script>
 
     <div class="flex-container">
-       <div style="text-align: center;"> 
+        <div style="text-align: center;">
             <span id="clock" class="clock">clock</span><br>
             <span id="apm" class="date">apm</span><br>
             <span id="temp" class="weather"></span>
+            <span id="region" class="weather"></span>
         </div>
     </div>
-    
-    
+
+
 
     <script>
         var Target = document.getElementById("clock");
