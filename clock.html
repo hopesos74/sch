@@ -161,14 +161,10 @@
         .weather {
             font-family: 'GangwonEdu_OTFBoldA';
             color: gray;
-            font-size: 2em;
+            font-size: 3em;
         }
 
-        .s_weather {
-            font-family: 'GangwonEdu_OTFBoldA';
-            color: gray;
-            font-size: 1em;
-        }
+       
     </style>
 </head>
 
@@ -190,8 +186,11 @@
                 })
                     .done(function (m) {
                         console.log(m);
-                        $("#temp").append("&nbsp;<i class='wi wi-owm-" + m.hourly[0].weather[0].id + "'></i>  ");
-                        $("#temp").append(m.hourly[0].temp + "°&nbsp;(" + m.daily[0].temp.min + "°~ " + m.daily[0].temp.max + "°)  " + m.hourly[0].humidity + "%&nbsp; " + m.hourly[0].wind_speed + "m/s  ");
+                       // $("#temp").append("&nbsp;<i class='wi wi-owm-" + m.hourly[0].weather[0].id + "'></i> " + m.hourly[0].temp + "°&nbsp;(↑ " + m.daily[0].temp.max + "°, ↓" + m.daily[0].temp.min + "°)");
+                       $("#temp").append("&nbsp;<i class='wi wi-owm-" + m.hourly[0].weather[0].id + "  '></i>  " + m.hourly[0].temp +"℃   "+ m.hourly[0].humidity + "%&nbsp; " + m.hourly[0].wind_speed + "m/s  ");
+                         
+                       $("#humid").append(m.hourly[0].humidity + "%&nbsp; " + m.hourly[0].wind_speed + "m/s  ");
+                        
                         // $("#top_temp").append(m.hourly[0].temp + "° " + m.hourly[0].humidity + "%&nbsp;");
                         //$("#temp").append("<img src='https://openweathermap.org/img/wn/"+ m.hourly[0].weather[0].icon +".png'>");
 
@@ -224,6 +223,7 @@
             <span id="clock" class="clock">clock</span><br>
             <span id="apm" class="date">apm</span><br>
             <span id="temp" class="weather"></span>
+          
             <span id="region" class="weather"></span>
         </div>
     </div>
