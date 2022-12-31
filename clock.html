@@ -1,4 +1,6 @@
 <html>
+
+<head>
     <meta charset="UTF-8">
     <title>clock2</title>
     <!-- Custom styles for this template -->
@@ -9,167 +11,74 @@
     <link rel="stylesheet" href="css/weather-icons-wind.css">
     <link rel="stylesheet" href="css/weather-icons-wind.min.css">
     <link rel="stylesheet" href="css/weather-icons.css">
-<style>
+    <style>
+        @font-face {
+            font-family: 'KOTRA_GOTHIC';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/KOTRA_GOTHIC.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
 
-    @font-face {
-        font-family: 'LeferiPoint-WhiteObliqueA';
-        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/LeferiPoint-WhiteObliqueA.woff') format('woff');
-        font-weight: normal;
-        font-style: normal;
-    }
+        @font-face {
+            font-family: 'KorailRoundGothicBold';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2212@1.0/KorailRoundGothicBold.woff2') format('woff2');
+            font-weight: 700;
+            font-style: normal;
+        }
 
-    @font-face {
-        font-family: 'Cafe24Ssurround';
-        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff') format('woff');
-        font-weight: normal;
-        font-style: normal;
-    }
+        @font-face {
+            font-family: '777Balsamtint';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_nine_@1.1/777Balsamtint.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
 
+        body {
+            margin: 0;
+            padding: 0;
+        }
 
-    @font-face {
-        font-family: 'Cafe24SsurroundAir';
-        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24SsurroundAir.woff') format('woff');
-        font-weight: normal;
-        font-style: normal;
-    }
+        .clock {
+            font-family: 'KorailRoundGothicBold';
+            color: gray;
+            font-size: 11em;
+        }
 
-    @font-face {
-        font-family: 'Cafe24Oneprettynight';
-        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Oneprettynight.woff') format('woff');
-        font-weight: normal;
-        font-style: normal;
-    }
+        .date {
+            font-family: 'KOTRA_GOTHIC';
+            color: gray;
+            font-size: 6em;
+        }
 
-    @font-face {
-        font-family: 'SDSamliphopangche_Outline';
-        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/SDSamliphopangche_Outline.woff') format('woff');
-        font-weight: normal;
-        font-style: normal;
-    }
+        .weather {
+            font-family: '777Balsamtint';
+            color: gray;
+            font-size: 3em;
+        }
 
-
-    @font-face {
-        font-family: 'KOTRA_GOTHIC';
-        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/KOTRA_GOTHIC.woff') format('woff');
-        font-weight: normal;
-        font-style: normal;
-    }
-
-    @font-face {
-        font-family: 'NanumSquareNeo-Variable';
-        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2') format('woff2');
-        font-weight: normal;
-        font-style: normal;
-    }
-
-
-    @font-face {
-        font-family: 'MaplestoryOTFBold';
-        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff') format('woff');
-        font-weight: normal;
-        font-style: normal;
-    }
-
-    @font-face {
-        font-family: 'NEXON Lv1 Gothic OTF';
-        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff') format('woff');
-        font-weight: normal;
-        font-style: normal;
-    }
-
-    @font-face {
-        font-family: 'GmarketSansMedium';
-        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
-        font-weight: normal;
-        font-style: normal;
-    }
-
-    @font-face {
-        font-family: 'HallymGothic-Regular';
-        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2204@1.0/HallymGothic-Regular.woff2') format('woff2');
-        font-weight: 400;
-        font-style: normal;
-    }
-
-    @font-face {
-        font-family: 'IBMPlexSansKR-Regular';
-        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
-        font-weight: normal;
-        font-style: normal;
-    }
-
-    @font-face {
-        font-family: 'MonoplexKR-Regular';
-        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_Monoplex-kr@1.0/MonoplexKR-Regular.woff2') format('woff2');
-        font-weight: 400;
-        font-style: normal;
-    }
+        .s_weather {
+            font-family: '777Balsamtint';
+            letter-spacing: -3px;
+            color: gray;
+            font-size: 2em;
+        }
 
 
-    @font-face {
-        font-family: 'KorailRoundGothicBold';
-        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2212@1.0/KorailRoundGothicBold.woff2') format('woff2');
-        font-weight: 700;
-        font-style: normal;
-    }
+        .wrap {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
 
-
-    @font-face {
-        font-family: 'GangwonEdu_OTFBoldA';
-        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff') format('woff');
-        font-weight: normal;
-        font-style: normal;
-    }
-
-    @font-face {
-        font-family: '777Balsamtint';
-        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_nine_@1.1/777Balsamtint.woff') format('woff');
-        font-weight: normal;
-        font-style: normal;
-    }
-
-
-    .clock {
-        font-family: 'KorailRoundGothicBold';
-        color: gray;
-        font-size: 11em;
-    }
-
-    .date {
-        font-family: 'KOTRA_GOTHIC';
-        color: gray;
-        font-size: 6em;
-    }
-
-    .weather {
-        font-family: '777Balsamtint';
-        color: gray;
-        font-size: 3em;
-    }
-
-    .s_weather {
-        font-family: '777Balsamtint';
-        letter-spacing: -3px;
-        color: gray;
-        font-size: 2em;
-    }
-
-
-    .wrap {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .box {
-        text-align: center;
-    }
-</style>
+        .box {
+            text-align: center;
+        }
+    </style>
+</head>
 
 <body>
-
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"
         integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 
@@ -190,7 +99,7 @@
                         // $("#temp").append("&nbsp;<i class='wi wi-owm-" + m.hourly[0].weather[0].id + "'></i> " + m.hourly[0].temp + "°&nbsp;(↑ " + m.daily[0].temp.max + "°, ↓" + m.daily[0].temp.min + "°)");
                         $("#temp").append("<span class='weather'><i class='wi wi-owm-" + m.hourly[0].weather[0].id + "  '></i> &nbsp;" + m.hourly[0].temp + "</span><span class='s_weather'>℃</span>&nbsp;&nbsp;&nbsp;<span class='weather'> " + m.hourly[0].humidity + "</span><span class='s_weather'>%</span>&nbsp;&nbsp;&nbsp; <span class='weather'>" + m.hourly[0].wind_speed + "</span><span class='s_weather'>m/s  </span>&nbsp;&nbsp;&nbsp;  ");
 
-                      
+
                     });
 
                 $.ajax({
@@ -208,11 +117,7 @@
         } else {
             alert("이 브라우저에서는 Geolocation이 지원되지 않습니다.")
         }
-
-
     </script>
-
-
     <div class="wrap">
         <div class="box">
             <span id="clock" class="clock">clock</span><br>
