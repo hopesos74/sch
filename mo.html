@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>요즘 TOP10</title>
+</head>
+<style>
+    @font-face {
+        font-family: 'LeferiPoint-WhiteObliqueA';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/LeferiPoint-WhiteObliqueA.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'Cafe24Ssurround';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+
+    @font-face {
+        font-family: 'Cafe24SsurroundAir';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24SsurroundAir.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'Cafe24Oneprettynight';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Oneprettynight.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'SDSamliphopangche_Outline';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/SDSamliphopangche_Outline.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+
+    @font-face {
+        font-family: 'KOTRA_GOTHIC';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/KOTRA_GOTHIC.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    .main {
+        width: 1150px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .top {
+        display: inline-block;
+
+        font-family: 'KOTRA_GOTHIC';
+        color: white;
+        font-size: 1.5em;
+        width: 100%;
+
+    }
+
+    .bottom {
+        display: inline-block;
+
+        font-family: 'KOTRA_GOTHIC';
+        color: white;
+        font-size: 1.5em;
+        width: 100%;
+        height: 55px;
+
+    }
+
+
+
+    .blank {
+        width: 10px;
+    }
+
+    .main_title {
+        font-family: 'Cafe24Oneprettynight';
+        text-align: right;
+        color: white;
+        line-height: 50px;
+        margin: 0;
+        font-size: 1.5em;
+        width: 220px;
+    }
+
+    .main_container {
+        align-items: stretch;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .subject {
+        align-items: center;
+        padding: 0px;
+        margin: 0px;
+        justify-content: center;
+        border: solid 1px #F6F6F6;
+        display: flex;
+        flex-wrap: nowrap;
+        height: 150px;
+    }
+
+    .subject_container {
+        align-items: center;
+        padding: 0px;
+        margin: 0px;
+        justify-content: center;
+        border: solid 1px #F6F6F6;
+    }
+
+    .container {
+        align-items: center;
+        padding: 0px;
+        margin: 0px;
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: center;
+        border: solid 1px #F6F6F6;
+        height: 200px;
+
+        /* display: inline-flex; */
+    }
+
+    .item {
+        padding: 3px;
+        margin: 3px;
+    }
+
+    .item:nth-child(2) {
+        width: 190px;
+    }
+
+    p {
+        margin: 0.2em;
+    }
+
+    .sub {
+        color: #8D8D8D;
+        font-family: 'LeferiPoint-WhiteObliqueA';
+        font-size: 0.85em;
+    }
+
+    .title {
+        font-family: 'Cafe24SsurroundAir';
+        font-size: 0.9em;
+    }
+
+    .sub_title {
+        font-family: 'LeferiPoint-WhiteObliqueA';
+        align-items: center;
+        justify-content: center;
+        border: solid 1px #F6F6F6;
+        text-align: center;
+        font-size: 1em;
+        height: 50px;
+        display: flex;
+        flex-wrap: nowrap;
+    }
+
+
+
+    .rank {
+        font-family: 'SDSamliphopangche_Outline';
+        font-size: 1.0em;
+    }
+
+
+    a {
+
+        text-decoration: none;
+        text-decoration-line: none;
+        color: white;
+
+    }
+
+    .topbox {
+        display: flex;
+        align-items: center;
+        /* 방향이 row 기준: 세로 중앙 정렬*/
+        height: 50px;
+        background: rgb(5, 86, 190);
+
+    }
+
+    .bottombox {
+        display: flex;
+        align-items: center;
+        /* 방향이 row 기준: 세로 중앙 정렬*/
+        height: 55px;
+        
+
+    }
+</style>
+
+<body>
+
+    <script>
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        var hours = date.getHours();
+        var month1 = ("0" + (1 + date.getMonth())).slice(-2); // 달앞에 숫자 0 붙이기
+        var day1 = ("0" + (date.getDate())).slice(-2);  // 일앞에 숫자 0 붙이기
+    </script>
+
+    <script>
+        var y_date = new Date();
+        y_date.setTime(new Date().getTime() - (1 * 24 * 60 * 60 * 1000));
+
+        var y_year = y_date.getFullYear();
+
+        var y_month = ("0" + (1 + y_date.getMonth())).slice(-2);
+        var y_day = ("0" + y_date.getDate()).slice(-2);
+
+        var yesterday = '' + y_year + y_month + y_day; //문자열로 합친다.
+        var yesterday1 = "" + yesterday + ""
+        var yesterday1 = yesterday1.replace(/(\d{4})(\d{2})(\d{2})/g, '$1.$2.$3');
+    </script>
+
+    <script>
+        var seven_date = new Date();
+        seven_date.setTime(new Date().getTime() - (7 * 24 * 60 * 60 * 1000));
+
+        var seven_year = seven_date.getFullYear();
+
+        var seven_month = ("0" + (1 + seven_date.getMonth())).slice(-2);
+        var seven_day = ("0" + seven_date.getDate()).slice(-2);
+
+        var sevenday = '' + seven_year + seven_month + seven_day; //문자열로 합친다.
+        var sevenday1 = "" + sevenday + ""
+        var sevenday1 = sevenday1.replace(/(\d{4})(\d{2})(\d{2})/g, '$1.$2.$3');
+    </script>
+
+    <script>
+        document.write("<div class='topbox'>")
+        // document.write("<div class='top'><p align='center'> 오늘의 TOP 10 " + year + "-" + month1 + "-" + day1 + "</p></div>")
+        document.write("<div class='top'><p align='center'><a href='music.html'>음악</a> <a href='movie.html'>영화</a> <a href='book.html'>책</a> <a href='index.html'>랭킹 TOP10</a></p></div>")
+        document.write("</div>")
+    </script>
+
+
+    <div class="main_container">
+
+        <script src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+
+
+        <script>
+            $.ajax({
+                method: "GET",
+                url: "https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=f5eef3421c602c6cb7ea224104795888&targetDt=" + yesterday + "",
+            })
+                .done(function (m) {
+                   console.log(m);
+                    $("#movie_period").append("영화 일별박스오피스<br>");
+                    $("#movie_period").append("(영화진흥위원회 : " + yesterday1 + ")");
+
+
+                            for (i = 0; i < 10; i++) {
+
+                                function numberWithCommas(x) {
+                                    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                }
+
+                                var id = m.boxOfficeResult.dailyBoxOfficeList[i].movieCd;
+                                
+                               // var poster = p.pageProps.data.weeklyBoxartUrls[id].url;
+
+                               
+                                var rankInten_color = "gray";
+                                var rankkInten = m.boxOfficeResult.dailyBoxOfficeList[i].rankInten;
+                                var rankInten1 = rankkInten.substr(0, 1);
+
+                                if (rankInten1 == "-") {
+                                    rankInten_color = "green";
+                                    rankInten = "▽" + rankkInten.substr(1, 1);
+                                } else if (rankInten1 == "0") {
+                                    rankInten_color = "gray";
+                                    rankInten = "-"
+                                } else {
+                                    rankInten_color = "red";
+                                    rankInten = "▲" + rankkInten;
+                                }
+
+                               // $("#movie_image" + i).append("<a href='https://kobis.or.kr/kobis/business/mast/mvie/searchMovieList.do?dtTp=movie&dtCd=" + m.boxOfficeResult.dailyBoxOfficeList[i].movieCd + "' target='_blank'><img src='" + poster + "' style='width:100px; height:126px;'></a>");
+                                $("#movie_contents" + i).append("<p class='title'> " + m.boxOfficeResult.dailyBoxOfficeList[i].rank + "위   <span style ='color:" + rankInten_color + ";'>" + rankInten + " </span></p>");
+                                $("#movie_contents" + i).append("<p class='title'> " + m.boxOfficeResult.dailyBoxOfficeList[i].movieNm + "</p>");
+                                $("#movie_contents" + i).append("<p class='sub'>개봉일자 : " + m.boxOfficeResult.dailyBoxOfficeList[i].openDt + "</p>");
+                                $("#movie_contents" + i).append("<p class='sub'>일일관객 : " + numberWithCommas(m.boxOfficeResult.dailyBoxOfficeList[i].audiCnt) + "(" + numberWithCommas(m.boxOfficeResult.dailyBoxOfficeList[i].audiInten) + ")</p>");
+                                $("#movie_contents" + i).append("<p class='sub'>누적관객 : " + numberWithCommas(m.boxOfficeResult.dailyBoxOfficeList[i].audiAcc) + "</p>");
+
+                            }
+
+                        });
+
+
+            
+
+            document.write("<div class='subject_container'>")
+            document.write("<div class='sub_title' id='movie_period'></div>")
+            for (i = 0; i < 10; i++) {
+                document.write("<div class='subject'>")
+               // document.write("<div class='item' id='movie_image" + i + "'> </div>");
+                document.write("<div class='item' id='movie_contents" + i + "'> </div>");
+                document.write("</div>");
+            }
+            document.write("</div>")
+        </script>
+
+        <script>
+            $.ajax({
+                method: "GET",
+                url: "https://imdb-api.com/en/API/BoxOffice/k_vaf43v25",
+            })
+                .done(function (m) {
+                   console.log(m);
+                    $("#box_period").append("미국 박스오피스 - IMDB<br>");
+                    $("#box_period").append("(" + yesterday1 + ")");
+                    for (i = 0; i < 10; i++) {
+                        var box_image = m.items[i].image;
+                        $("#box_image" + i).append("<a href='https://www.imdb.com/title/" + m.items[i].id + "' target='_blank'><img src='" + box_image + "' style='width:100px; height:126px;'></a>");
+                        $("#box_contents" + i).append("<p class='title'> " + m.items[i].rank + "위 </p>");
+                        $("#box_contents" + i).append("<p class='title'> " + m.items[i].title + "</p>");
+                        $("#box_contents" + i).append("<p class='sub'>gross : " + m.items[i].gross + "</p>");
+                        $("#box_contents" + i).append("<p class='sub'>weekend : " + m.items[i].weekend + "</p>");
+                        $("#box_contents" + i).append("<p class='sub'>weeks : " + m.items[i].weeks + "</p>");
+                    }
+                });
+
+            document.write("<div class='subject_container'>")
+            document.write("<div class='sub_title' id='box_period'></div>")
+            for (i = 0; i < 10; i++) {
+                document.write("<div class='subject'>")
+                document.write("<div class='item' id='box_image" + i + "'> </div>");
+                document.write("<div class='item' id='box_contents" + i + "'> </div>");
+                document.write("</div>");
+            }
+            document.write("</div>")
+        </script>
+
+<script>
+    $.ajax({
+        method: "GET",
+        url: "https://imdb-api.com/en/API/BoxOfficeAllTime/k_vaf43v25",
+    })
+        .done(function (m) {
+            console.log(m);
+            $("#box_alltime_period").append("미국 역대 박스오피스 - IMDB<br>");
+            // $("#box_alltime_period").append("(" + yesterday1 + ")");
+
+
+            $.ajax({
+                method: "GET",
+
+                //url: "http://hopesos.dothome.co.kr/alltimeposter.json"
+                 url: "https://hopesos74.github.io/sch/alltimeposter.json"
+                //url: "alltimeposter.json"
+            })
+                .done(function (p) {
+                    console.log(p);
+
+                    for (i = 0; i < 10; i++) {
+
+                        var id = m.items[i].id;
+                        var poster = p.pageProps.data.alltime[id].url;
+
+                        $("#box_alltime_image" + i).append("<a href='https://www.imdb.com/title/" + m.items[i].id + "' target='_blank'><img src='" + poster + "' style='width:100px; height:126px;'></a>");
+                        $("#box_alltime_contents" + i).append("<p class='title'> " + m.items[i].rank + "위 </p>");
+                        $("#box_alltime_contents" + i).append("<p class='title'> " + m.items[i].title + "</p>");
+                        //   $("#box_alltime_contents" + i).append("<p class='sub'>gross : " + m.items[i].gross + "</p>");
+                        $("#box_alltime_contents" + i).append("<p class='sub'>전세계 총매출액 : " + m.items[i].worldwideLifetimeGross + "</p>");
+                        $("#box_alltime_contents" + i).append("<p class='sub'>year : " + m.items[i].year + "</p>");
+                    }
+                });
+        });
+
+    document.write("<div class='subject_container'>")
+    document.write("<div class='sub_title' id='box_alltime_period'></div>")
+    for (i = 0; i < 10; i++) {
+        document.write("<div class='subject'>")
+        document.write("<div class='item' id='box_alltime_image" + i + "'> </div>");
+        document.write("<div class='item' id='box_alltime_contents" + i + "'> </div>");
+        document.write("</div>");
+    }
+    document.write("</div>")
+</script>
+
+
+
+<!--
+        <script>
+            $.ajax({
+                method: "GET",
+
+                url: "https://myfirstbestseller.herokuapp.com/http://book.interpark.com/api/bestSeller.api?key=539A915AFFCE9EA590A963E64B4E89B905585E1F73CED8C0A2F0235A071182B7&categoryId=100&output=json",
+
+            })
+                .done(function (m) {
+                 //   console.log(m);
+                    $("#book_period").append("도서 주간 베스트셀러 - 인터파크<br>");
+                    $("#book_period").append("(" + sevenday1 + " ~ " + yesterday1 + ")");
+                    for (i = 0; i < 30; i++) {
+                        var pubDate = "" + m.item[i].pubDate + "";
+                        pubDate = pubDate.replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3');
+                        $("#book_image" + i).append("<a href='" + m.item[i].link + "' target='_blank'><img src='" + m.item[i].coverSmallUrl + "'></a>");
+                        $("#book_contents" + i).append("<p class='title'> " + m.item[i].rank + "위 </p>");
+                        $("#book_contents" + i).append("<p class='title'> " + m.item[i].title + "</p>");
+                        $("#book_contents" + i).append("<p class='sub'>" + m.item[i].author + "</p>");
+                        $("#book_contents" + i).append("<p class='sub'>" + m.item[i].publisher + "</p>");
+                        $("#book_contents" + i).append("<p class='sub'>" + pubDate + "</p>");
+                    }
+                });
+
+            document.write("<div class='subject_container'>")
+            document.write("<div class='sub_title' id='book_period'></div>")
+
+            for (i = 0; i < 10; i++) {
+                document.write("<div class='subject'>")
+                document.write("<div class='item' id='book_image" + i + "'> </div>");
+                document.write("<div class='item' id='book_contents" + i + "'> </div>");
+                document.write("</div>");
+            }
+            document.write("</div>");
+
+        </script>
+    </div>
+  <script>
+            $.ajax({
+                method: "GET",
+                url: "https://myfirstbestseller.herokuapp.com/https://sports.daum.net/prx/hermes/api/team/rank.json?leagueCode=epl&seasonKey=20212022&page=1&pageSize=100",
+
+            })
+                .done(function (m) {
+
+                    console.log(m);
+
+
+
+
+                    $("#pl_period").append("프리미어리그 순위<br>");
+                    $("#pl_period").append("(" + yesterday1 + " 기준)");
+
+                    for (i = 0; i < 20; i++) {
+
+                        // var pubDate = "" + m.item[i].pubDate + "";
+                        // pubDate = pubDate.replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3');
+
+                        // $("#album_rank" + i).append("<p class='rank'>" + m.item[i].rank + "</p>");
+                        $("#pl_image" + i).append("<img src='" + m.list[i].imageUrl + "' style='width:90px; height:90px;'>");
+                        $("#pl_contents" + i).append("<p class='title'> " + m.list[i].rank.rank + "위 </p>");
+                        $("#pl_contents" + i).append("<p class='title'> " + m.list[i].shortName + " 승점" + m.list[i].rank.pts + "</p>");
+                        $("#pl_contents" + i).append("<p class='sub'> " + m.list[i].rank.game + "경기 " + m.list[i].rank.win + "승 " + m.list[i].rank.draw + "무 " + m.list[i].rank.loss + "패 </p>");
+                        $("#pl_contents" + i).append("<p class='sub'> " + m.list[i].rank.gf + "득점 " + m.list[i].rank.ga + "실점 " + m.list[i].rank.gd + "득실 </p>");
+
+                    }
+                });
+
+
+            document.write("<div class='subject_container'>");
+            document.write("<div class='sub_title' id='pl_period'></div>")
+            for (i = 0; i < 10; i++) {
+                document.write("<div class='subject'>")
+                document.write("<div class='item' id='pl_image" + i + "'> </div>");
+                document.write("<div class='item' id='pl_contents" + i + "'> </div>");
+                document.write("</div>");
+            }
+            document.write("</div>");
+
+        </script>
+    !-->
+
+</body>
+
+</html>
