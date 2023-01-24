@@ -1,0 +1,65 @@
+{
+    "pageProps": {
+        "data": {
+            "alltime": {
+
+                "tt0499549": {
+                    "movieCd": "tt0499549",
+                    "movieNm": "avata", 
+                    "url": "https://m.media-amazon.com/images/I/91ErqttBmKL._AC_UY436_QL65_.jpg"
+                }, 
+                "tt4154796": {
+                    "movieCd": "tt4154796",
+                    "movieNm": "Avengers: Endgame", 
+                    "url": "https://m.media-amazon.com/images/I/91e9898R7QL._AC_UL640_QL65_.jpg"
+                }, 
+                "tt0120338": {
+                    "movieCd": "tt0120338",
+                    "movieNm": "Titanic",
+                    "url": "https://m.media-amazon.com/images/I/71Asq17cUvL._AC_UY436_QL65_.jpg"
+                }, 
+                "tt2488496": {
+                    "movieCd": "tt2488496",
+                    "movieNm": "Star Wars: Episode VII - The Force Awakens",
+                    "url": "https://m.media-amazon.com/images/I/91FDYb0ehmL._AC_UY436_QL65_.jpg"
+                }, 
+                "tt4154756": {
+                    "movieCd": "tt4154756",
+                    "movieNm": "Avengers: Infinity War",
+                    "url": "https://m.media-amazon.com/images/I/A1aHRPvn5JL._AC_UY436_QL65_.jpg"
+                }, 
+                "tt10872600": {
+                    "movieCd": "tt10872600",
+                    "movieNm": "Spider-Man: No Way Home",
+                    "url": "https://m.media-amazon.com/images/I/91PKNbBAufL._AC_UY436_QL65_.jpg"
+                }, 
+                "tt0369610": {
+                    "movieCd": "tt0369610",
+                    "movieNm": "Jurassic World",
+                    "url": "https://m.media-amazon.com/images/I/91-Oxs+OziL._AC_UY436_QL65_.jpg"
+                }, 
+                "tt6105098": {
+                    "movieCd": "tt6105098",
+                    "movieNm": "The Lion King",
+                    "url": "https://m.media-amazon.com/images/I/81aLWmKrNVL._AC_UY436_QL65_.jpg"
+                }, 
+                "tt0848228": {
+                    "movieCd": "tt0848228",
+                    "movieNm": "The Avengers",
+                    "url": "https://m.media-amazon.com/images/I/A1TbOVRiBRL._AC_UY436_QL65_.jpg"
+                }, 
+                "tt2820852": {
+                    "movieCd": "tt2820852",
+                    "movieNm": "Furious 7",
+                    "url": "https://m.media-amazon.com/images/I/81y4cjKcf6L._AC_UY436_QL65_.jpg"
+                }
+            }
+        },
+        "pathParams": {},
+        "pageText": {},
+        "geoGrain": "country",
+        "canonicalPath": null
+    },
+    "__N_SSG": true
+}
+
