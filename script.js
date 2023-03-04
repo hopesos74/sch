@@ -1,7 +1,7 @@
 // API 인증 정보
 const CLIENT_ID = '94379887274-p7jb3ov9ga63m8polr0qm9u9ltggbktj.apps.googleusercontent.com';
 const CLIENT_SECRET = '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';
-const REDIRECT_URI = 'YOUR_REDIRECT_URI';
+const REDIRECT_URI = 'https://hopesos74.github.io/sch/photo.html';
 
 // 인증 스코프
 const SCOPES = 'https://www.googleapis.com/auth/photoslibrary.readonly';
