@@ -245,12 +245,6 @@
         var sevenday1 = sevenday1.replace(/(\d{4})(\d{2})(\d{2})/g, '$1.$2.$3');
     </script>
 
-    <script>
-        document.write("<div class='topbox'>")
-        // document.write("<div class='top'><p align='center'> 오늘의 TOP 10 " + year + "-" + month1 + "-" + day1 + "</p></div>")
-        document.write("<div class='top'><p align='center'><a href='music.html'>음악</a> <a href='movie.html'>영화</a> <a href='book.html'>책</a> <a href='index.html'>랭킹 TOP10</a></p></div>")
-        document.write("</div>")
-    </script>
 
 
     <div class="main_container">
@@ -308,8 +302,6 @@
 
                         });
 
-
-            
 
             document.write("<div class='subject_container'>")
             document.write("<div class='sub_title' id='movie_period'></div>")
@@ -398,31 +390,36 @@
         document.write("</div>");
     }
     document.write("</div>")
+    
 </script>
 
 
 
-<!--
+
+
         <script>
+
+
+
             $.ajax({
                 method: "GET",
 
-                url: "https://myfirstbestseller.herokuapp.com/http://book.interpark.com/api/bestSeller.api?key=539A915AFFCE9EA590A963E64B4E89B905585E1F73CED8C0A2F0235A071182B7&categoryId=100&output=json",
+                url: "http://cors-anywhere.herokuapp.com/https://aladin.co.kr/ttb/api/ItemList.aspx?ttbkey=ttbhopesos0259002&QueryType=Bestseller&MaxResults=10&start=1&SearchTarget=Book&output=js&Version=20131101",
 
             })
                 .done(function (m) {
-                 //   console.log(m);
-                    $("#book_period").append("도서 주간 베스트셀러 - 인터파크<br>");
+                   console.log(m);
+                    $("#book_period").append("도서 주간 베스트셀러 - 알라딘<br>");
                     $("#book_period").append("(" + sevenday1 + " ~ " + yesterday1 + ")");
                     for (i = 0; i < 30; i++) {
-                        var pubDate = "" + m.item[i].pubDate + "";
+                      var pubDate = "" + m.item[i].pubDate + "";
                         pubDate = pubDate.replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3');
-                        $("#book_image" + i).append("<a href='" + m.item[i].link + "' target='_blank'><img src='" + m.item[i].coverSmallUrl + "'></a>");
-                        $("#book_contents" + i).append("<p class='title'> " + m.item[i].rank + "위 </p>");
+                        $("#book_image" + i).append("<a href='" + m.item[i].link + "' target='_blank'><img src='" + m.item[i].cover + "'></a>");
+                        $("#book_contents" + i).append("<p class='title'> " + m.item[i].bestRank + "위 </p>");
                         $("#book_contents" + i).append("<p class='title'> " + m.item[i].title + "</p>");
                         $("#book_contents" + i).append("<p class='sub'>" + m.item[i].author + "</p>");
                         $("#book_contents" + i).append("<p class='sub'>" + m.item[i].publisher + "</p>");
-                        $("#book_contents" + i).append("<p class='sub'>" + pubDate + "</p>");
+                        $("#book_contents" + i).append("<p class='sub'>" + m.item[i].pubDate + "</p>");
                     }
                 });
 
@@ -439,10 +436,11 @@
 
         </script>
     </div>
+    
   <script>
             $.ajax({
                 method: "GET",
-                url: "https://myfirstbestseller.herokuapp.com/https://sports.daum.net/prx/hermes/api/team/rank.json?leagueCode=epl&seasonKey=20212022&page=1&pageSize=100",
+                url: "http://cors-anywhere.herokuapp.com/https://sports.daum.net/prx/hermes/api/team/rank.json?leagueCode=epl&seasonKey=20222023&page=1&pageSize=100",
 
             })
                 .done(function (m) {
@@ -482,7 +480,7 @@
             document.write("</div>");
 
         </script>
-    !-->
+    
 
 </body>
 
