@@ -311,6 +311,84 @@
         <script src="https://code.jquery.com/jquery-3.6.0.js"
             integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 
+<!--
+            <script>
+                $.ajax({
+                    method: "GET",
+                    url: "https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=f5eef3421c602c6cb7ea224104795888&targetDt=" + yesterday + "",
+                })
+                    .done(function (m) {
+                        console.log(m);
+                        $("#movie_period").append("영화 일별박스오피스<br>");
+                        $("#movie_period").append("(영화진흥위원회 : " + yesterday1 + ")");
+    
+                        $.ajax({
+                            method: "GET",
+    
+                            //url: "http://hopesos.dothome.co.kr/202203.json"
+                            url: "https://hopesos74.github.io/sch/poster.json"
+                        })
+                            .done(function (p) {
+                                console.log(p);
+    
+                                for (i = 0; i < 10; i++) {
+    
+                                    function numberWithCommas(x) {
+                                        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                    }
+    
+                                    var id = m.boxOfficeResult.dailyBoxOfficeList[i].movieCd;
+    
+                                    var poster = p.pageProps.data.weeklyBoxartUrls[id].url;
+                                    /*
+                                    if (poster) {
+                                        poster = poster
+                                    } else {
+    
+                                        poster = "http://hopesos.dothome.co.kr/good.jpg"
+                                    } */
+                                    var rankInten_color = "gray";
+                                    var rankkInten = m.boxOfficeResult.dailyBoxOfficeList[i].rankInten;
+                                    var rankInten1 = rankkInten.substr(0, 1);
+    
+                                    if (rankInten1 == "-") {
+                                        rankInten_color = "green";
+                                        rankInten = "▽" + rankkInten.substr(1, 1);
+                                    } else if (rankInten1 == "0") {
+                                        rankInten_color = "gray";
+                                        rankInten = "-"
+                                    } else {
+                                        rankInten_color = "red";
+                                        rankInten = "▲" + rankkInten;
+                                    }
+    
+                                    $("#movie_image" + i).append("<a href='https://kobis.or.kr/kobis/business/mast/mvie/searchMovieList.do?dtTp=movie&dtCd=" + m.boxOfficeResult.dailyBoxOfficeList[i].movieCd + "' target='_blank'><img src='" + poster + "' style='width:100px; height:126px;'></a>");
+                                    $("#movie_contents" + i).append("<p class='title'> " + m.boxOfficeResult.dailyBoxOfficeList[i].rank + "위   <span style ='color:" + rankInten_color + ";'>" + rankInten + " </span></p>");
+                                    $("#movie_contents" + i).append("<p class='title'> " + m.boxOfficeResult.dailyBoxOfficeList[i].movieNm + "</p>");
+                                    $("#movie_contents" + i).append("<p class='sub'>개봉일자 : " + m.boxOfficeResult.dailyBoxOfficeList[i].openDt + "</p>");
+                                    $("#movie_contents" + i).append("<p class='sub'>일일관객 : " + numberWithCommas(m.boxOfficeResult.dailyBoxOfficeList[i].audiCnt) + "(" + numberWithCommas(m.boxOfficeResult.dailyBoxOfficeList[i].audiInten) + ")</p>");
+                                    $("#movie_contents" + i).append("<p class='sub'>누적관객 : " + numberWithCommas(m.boxOfficeResult.dailyBoxOfficeList[i].audiAcc) + "</p>");
+    
+                                }
+    
+                            });
+    
+    
+                    });
+    
+                document.write("<div class='subject_container'>")
+                document.write("<div class='sub_title' id='movie_period'></div>")
+                for (i = 0; i < 10; i++) {
+                    document.write("<div class='subject'>")
+                    document.write("<div class='item' id='movie_image" + i + "'> </div>");
+                    document.write("<div class='item' id='movie_contents" + i + "'> </div>");
+                    document.write("</div>");
+                }
+                document.write("</div>")
+            </script>
+    
+
+-->
 
 
         <script>
@@ -326,11 +404,9 @@
 
                     for (i = 0; i < 10; i++) {
 
-
-
                         var id = m.boxOfficeResult.dailyBoxOfficeList[i].movieCd;
 
-                        // var poster = p.pageProps.data.weeklyBoxartUrls[id].url;
+                        var poster = "https://hopesos74.github.io/sch/img/"+id+".jpg";
 
 
                         var rankInten_color = "gray";
@@ -348,7 +424,7 @@
                             rankInten = "▲" + rankkInten;
                         }
 
-                        // $("#movie_image" + i).append("<a href='https://kobis.or.kr/kobis/business/mast/mvie/searchMovieList.do?dtTp=movie&dtCd=" + m.boxOfficeResult.dailyBoxOfficeList[i].movieCd + "' target='_blank'><img src='" + poster + "' style='width:100px; height:126px;'></a>");
+                        $("#movie_image" + i).append("<a href='https://kobis.or.kr/kobis/business/mast/mvie/searchMovieList.do?dtTp=movie&dtCd=" + m.boxOfficeResult.dailyBoxOfficeList[i].movieCd + "' target='_blank'><img src='" + poster + "' style='width:100px; height:126px;'></a>");
                         $("#movie_contents" + i).append("<p class='title'> " + m.boxOfficeResult.dailyBoxOfficeList[i].rank + "위   <span style ='color:" + rankInten_color + ";'>" + rankInten + " </span></p>");
                         $("#movie_contents" + i).append("<p class='title'> " + m.boxOfficeResult.dailyBoxOfficeList[i].movieNm + "</p>");
                         $("#movie_contents" + i).append("<p class='sub'>개봉일자 : " + m.boxOfficeResult.dailyBoxOfficeList[i].openDt + "</p>");
@@ -364,12 +440,15 @@
             document.write("<div class='sub_title' id='movie_period'></div>")
             for (i = 0; i < 10; i++) {
                 document.write("<div class='subject'>")
-                // document.write("<div class='item' id='movie_image" + i + "'> </div>");
+                 document.write("<div class='item' id='movie_image" + i + "'> </div>");
                 document.write("<div class='item' id='movie_contents" + i + "'> </div>");
                 document.write("</div>");
             }
             document.write("</div>")
         </script>
+
+
+    
 
         <script>
             $.ajax({
