@@ -1,0 +1,158 @@
+{
+    "pageProps": {
+        "data": {
+            "weeklyBoxartUrls": {
+
+                "20231592": {
+                    "movieCd": "20231592",
+                    "movieNm": "분노의 질주", 
+                    "url": "https://www.kobis.or.kr/kobis/business/mast/mvie/popupImg.do?imgURL=/common/mast/movie/2023/05/e37a1df7b75f4962983b511cdfb9507a.jpg"
+                }, 
+                "20211200": {
+                    "movieCd": "20211200",
+                    "movieNm": "언차티드", 
+                    "url": "https://movie-phinf.pstatic.net/20220209_134/1644383194692LvFfD_JPEG/movie_image.jpg"
+                }, 
+                "20223278": {
+                    "movieCd": "20223278",
+                    "movieNm": "극장판 주술회전 0",
+                    "url": "https://movie-phinf.pstatic.net/20220217_242/1645084631470w6PTw_JPEG/movie_image.jpg"
+                }, 
+                "20212741": {
+                    "movieCd": "20212741",
+                    "movieNm": "안테벨룸",
+                    "url": "https://movie-phinf.pstatic.net/20220120_114/1642670007393r2KR2_JPEG/movie_image.jpg"
+                }, 
+                "20208006": {
+                    "movieCd": "20208006",
+                    "movieNm": "인민을 위해 복무하라",
+                    "url": "https://movie-phinf.pstatic.net/20220223_93/1645596742589KTCfc_JPEG/movie_image.jpg"
+                }, 
+                "20201965": {
+                    "movieCd": "20201965",
+                    "movieNm": "해적: 도깨비 깃발",
+                    "url": "https://movie-phinf.pstatic.net/20220126_99/16431781439406dpnP_JPEG/movie_image.jpg"
+                }, 
+                "20223743": {
+                    "movieCd": "20223743",
+                    "movieNm": "나이트메어 앨리",
+                    "url": "https://movie-phinf.pstatic.net/20220216_25/1644979622768ayXMn_JPEG/movie_image.jpg"
+                }, 
+                "20223308": {
+                    "movieCd": "20223308",
+                    "movieNm": "옥토넛 - 해저동굴 대탈출",
+                    "url": "https://movie-phinf.pstatic.net/20220125_255/1643093997540IkJaG_JPEG/movie_image.jpg"
+                }, 
+                "20210028": {
+                    "movieCd": "20210028",
+                    "movieNm": "스파이더맨 : 노웨이홈",
+                    "url": "https://movie-phinf.pstatic.net/20211215_297/1639556766975z0641_JPEG/movie_image.jpg"
+                }, 
+                "20218764": {
+                    "movieCd": "20218764",
+                    "movieNm": "씽2게더",
+                    "url": "https://movie-phinf.pstatic.net/20211231_136/1640927037740RqKuo_JPEG/movie_image.jpg"
+                },
+                "20190299": {
+                    "movieCd": "20190299",
+                    "movieNm": "이상한 나라의 수학자",
+                    "url": "https://movie-phinf.pstatic.net/20220210_27/16444726389021AWu6_JPEG/movie_image.jpg"
+                },
+                "20188441": {
+                    "movieCd": "20188441",
+                    "movieNm": "킹메이커",
+                    "url": "https://movie-phinf.pstatic.net/20220126_227/1643182432127j8nuq_JPEG/movie_image.jpg"
+                },
+                "20205443": {
+                    "movieCd": "20205443",
+                    "movieNm": "나일 강의 죽음",
+                    "url": "https://movie-phinf.pstatic.net/20220209_35/1644391235678J9KBy_JPEG/movie_image.jpg"
+                },
+                "20223902": {
+                    "movieCd": "20223902",
+                    "movieNm": "에이핑크",
+                    "url": "https://hopesos74.github.io/sch/img/20223902.jpg"
+                },
+                "20223402": {
+                    "movieCd": "20223402",
+                    "movieNm": "나이트 레이더스",
+                    "url": "https://movie-phinf.pstatic.net/20220210_83/1644461379258dc39x_JPEG/movie_image.jpg"
+                },
+                "20217391": {
+                    "movieCd": "20217391",
+                    "movieNm": "소피의 세계 ",
+                    "url": "https://movie-phinf.pstatic.net/20220211_183/1644564579835qSM9K_JPEG/movie_image.jpg"
+                },
+                "20202689": {
+                    "movieCd": "20202689",
+                    "movieNm": "우리가 사랑이라고 믿는 것 ",
+                    "url": "https://www.kobis.or.kr/common/mast/movie/2022/02/964d75a8f6e24e4d8ba5cb6364667201.jpg"
+                },
+                "20212708": {
+                    "movieCd": "20212708",
+                    "movieNm": "시라노 ",
+                    "url": "https://www.kobis.or.kr/common/mast/movie/2022/01/6e16c01724614d7da9429b61d15f9c61.jpg"
+                },
+                "20223828": {
+                    "movieCd": "20223828",
+                    "movieNm": "나의 히어로 아카데미 ",
+                    "url": "https://www.kobis.or.kr/common/mast/movie/2022/02/f158055edf304e3c8a448fd400e482fe.jpg"
+                },
+                "20223953": {
+                    "movieCd": "20223953",
+                    "movieNm": "블랙라이트",
+                    "url": "https://www.kobis.or.kr/common/mast/movie/2022/02/61d1ff33c2cf401485b7cd6bb62bce7c.jpg"
+                },
+                "20223804": {
+                    "movieCd": "20223804",
+                    "movieNm": "레벤느망",
+                    "url": "https://www.kobis.or.kr/common/mast/movie/2022/02/00632bff177f4c31b84baa2f48a9d0ec.jpg"
+                },
+                "20223676": {
+                    "movieCd": "20223676",
+                    "movieNm": "문폴",
+                    "url": "https://www.kobis.or.kr/common/mast/movie/2022/02/29a1f79f097c4c5ea17b85b14d54251d.jpg"
+                },
+                "20199500": {
+                    "movieCd": "20199500",
+                    "movieNm": "뜨거운피",
+                    "url": "https://www.kobis.or.kr/common/mast/movie/2022/02/7e5775fa75a246bbbf4dd65ab4ba598b.jpg"
+                },
+                "20210541": {
+                    "movieCd": "20210541",
+                    "movieNm": "스펜서",
+                    "url": "https://www.kobis.or.kr/common/mast/movie/2022/03/59b082fa23ff44fa9c56d2e51c9c67da.jpg"
+                },
+                "20216064": {
+                    "movieCd": "20216064",
+                    "movieNm": "하늘의 푸르름을 아는 사람이여",
+                    "url": "https://www.kobis.or.kr/common/mast/movie/2022/03/fc43c0125283439e950c378a2d09b2a6.jpg"
+                },
+                "20223950": {
+                    "movieCd": "20223950",
+                    "movieNm": "메리미",
+                    "url": "https://www.kobis.or.kr/common/mast/movie/2022/02/bf95d3c78a814dbf9307f51f51089af4.jpg"
+                },
+                "20223397": {
+                    "movieCd": "20223397",
+                    "movieNm": "도어맨",
+                    "url": "https://www.kobis.or.kr/common/mast/movie/2022/02/827b48e96b9f486a8f59db1413178bff.jpg"
+                }
+
+
+                
+
+               
+                
+                
+
+            }
+        },
+        "pathParams": {},
+        "pageText": {},
+        "geoGrain": "country",
+        "canonicalPath": null
+    },
+    "__N_SSG": true
+}
+
