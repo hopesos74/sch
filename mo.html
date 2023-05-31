@@ -598,6 +598,47 @@
         </script>
 
 
+
+
+<script>
+    $.ajax({
+        method: "GET",
+
+        url: "https://hopesos74.github.io/sch/kyobo.json",
+
+    })
+        .done(function (m) {
+             console.log(m);
+
+            $("#kyobo_period").append("교보문고 주간 베스트셀러<br>");
+            $("#kyobo_period").append("(" + sevenday1 + " ~ " + yesterday1 + ")");
+          //  $("#aladin_period").append("(" + m.pubDate + ")");
+
+            for (i = 0; i < 10; i++) {
+
+                $("#kyobo_image" + i).append("<a href='https://product.kyobobook.co.kr/detail/" + m.data.bestSeller[i].saleCmdtid + "' target='_blank'><img src='https://contents.kyobobook.co.kr/sih/fit-in/300x0/pdt/" +m.data.bestSeller[i].cmdtCode +".jpg' style='width:100px; height:126px;' ></a>");
+                $("#kyobo_contents" + i).append("<p class='title'> " + m.data.bestSeller[i].prstRnkn + "위   </p>");
+                $("#kyobo_contents" + i).append("<p class='title'> " + m.data.bestSeller[i].cmdtName + "</p>");
+                $("#kyobo_contents" + i).append("<p class='sub'>" + m.data.bestSeller[i].chrcName + "</p>");
+                $("#kyobo_contents" + i).append("<p class='sub'>" + m.data.bestSeller[i].pbcmName + "</p>");
+                $("#kyobo_contents" + i).append("<p class='sub'>" + m.data.bestSeller[i].rlseDate + "</p>");
+            }
+
+
+        });
+
+
+    document.write("<div class='subject_container'>");
+    document.write("<div class='sub_title' id='kyobo_period'></div>")
+    for (i = 0; i < 10; i++) {
+        document.write("<div class='subject'>")
+        document.write("<div class='item' id='kyobo_image" + i + "'> </div>");
+        document.write("<div class='item' id='kyobo_contents" + i + "'> </div>");
+        document.write("</div>");
+    }
+    document.write("</div>");
+
+</script>
 <script>
     $.ajax({
         method: "GET",
