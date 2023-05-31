@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -200,7 +201,7 @@
         align-items: center;
         /* 방향이 row 기준: 세로 중앙 정렬*/
         height: 55px;
-        
+
 
     }
 </style>
@@ -215,6 +216,41 @@
         var hours = date.getHours();
         var month1 = ("0" + (1 + date.getMonth())).slice(-2); // 달앞에 숫자 0 붙이기
         var day1 = ("0" + (date.getDate())).slice(-2);  // 일앞에 숫자 0 붙이기
+
+        Date.prototype.getWeek = function (dowOffset) {
+            /*getWeek() was developed by Nick Baicoianu at MeanFreePath: http://www.meanfreepath.com */
+
+            dowOffset = typeof (dowOffset) == 'number' ? dowOffset : 0; // dowOffset이 숫자면 넣고 아니면 0
+            var newYear = new Date(this.getFullYear(), 0, 1);
+            var day = newYear.getDay() - dowOffset; //the day of week the year begins on
+            day = (day >= 0 ? day : day + 7);
+            var daynum = Math.floor((this.getTime() - newYear.getTime() -
+                (this.getTimezoneOffset() - newYear.getTimezoneOffset()) * 60000) / 86400000) + 1;
+            var weeknum;
+            //if the year starts before the middle of a week
+            if (day < 4) {
+                weeknum = Math.floor((daynum + day - 1) / 7) + 1;
+                if (weeknum > 52) {
+                    let nYear = new Date(this.getFullYear() + 1, 0, 1);
+                    let nday = nYear.getDay() - dowOffset;
+                    nday = nday >= 0 ? nday : nday + 7;
+                    /*if the next year starts before the middle of
+                      the week, it is week #1 of that year*/
+                    weeknum = nday < 4 ? 1 : 53;
+                }
+            }
+            else {
+                weeknum = Math.floor((daynum + day - 1) / 7);
+            }
+            return weeknum;
+        };
+
+        var week = new Date().getWeek() - 1;
+        console.log(week);
+
+        function numberWithCommas(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
     </script>
 
     <script>
@@ -243,6 +279,29 @@
         var sevenday = '' + seven_year + seven_month + seven_day; //문자열로 합친다.
         var sevenday1 = "" + sevenday + ""
         var sevenday1 = sevenday1.replace(/(\d{4})(\d{2})(\d{2})/g, '$1.$2.$3');
+
+        function getWeekRange(year1, week1) {
+            const firstDayOfYear = new Date(year, 0, 1);
+            const daysToAdd = (week1 - 1) * 7;
+
+            // 주어진 주차의 시작일 (금요일) 계산
+            const startDate = new Date(firstDayOfYear.getTime() + (daysToAdd * 86400000)); // 86400000 milliseconds = 1 day
+            while (startDate.getDay() !== 5) { // 5: 금요일
+                startDate.setDate(startDate.getDate() + 1);
+            }
+
+            // 주어진 주차의 종료일 (목요일) 계산
+            const endDate = new Date(startDate.getTime() + 6 * 86400000); // 6 days added for the end date
+            endDate.setDate(endDate.getDate()); // 1일을 빼서 목요일로 설정
+
+            return {
+                startDate,
+                endDate
+            };
+
+        }
+
+
     </script>
 
 
@@ -260,54 +319,52 @@
                 url: "https://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=f5eef3421c602c6cb7ea224104795888&targetDt=" + yesterday + "",
             })
                 .done(function (m) {
-                   console.log(m);
+                    console.log(m);
                     $("#movie_period").append("영화 일별박스오피스<br>");
                     $("#movie_period").append("(영화진흥위원회 : " + yesterday1 + ")");
 
 
-                            for (i = 0; i < 10; i++) {
+                    for (i = 0; i < 10; i++) {
 
-                                function numberWithCommas(x) {
-                                    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                                }
 
-                                var id = m.boxOfficeResult.dailyBoxOfficeList[i].movieCd;
-                                
-                               // var poster = p.pageProps.data.weeklyBoxartUrls[id].url;
 
-                               
-                                var rankInten_color = "gray";
-                                var rankkInten = m.boxOfficeResult.dailyBoxOfficeList[i].rankInten;
-                                var rankInten1 = rankkInten.substr(0, 1);
+                        var id = m.boxOfficeResult.dailyBoxOfficeList[i].movieCd;
 
-                                if (rankInten1 == "-") {
-                                    rankInten_color = "green";
-                                    rankInten = "▽" + rankkInten.substr(1, 1);
-                                } else if (rankInten1 == "0") {
-                                    rankInten_color = "gray";
-                                    rankInten = "-"
-                                } else {
-                                    rankInten_color = "red";
-                                    rankInten = "▲" + rankkInten;
-                                }
+                        // var poster = p.pageProps.data.weeklyBoxartUrls[id].url;
 
-                               // $("#movie_image" + i).append("<a href='https://kobis.or.kr/kobis/business/mast/mvie/searchMovieList.do?dtTp=movie&dtCd=" + m.boxOfficeResult.dailyBoxOfficeList[i].movieCd + "' target='_blank'><img src='" + poster + "' style='width:100px; height:126px;'></a>");
-                                $("#movie_contents" + i).append("<p class='title'> " + m.boxOfficeResult.dailyBoxOfficeList[i].rank + "위   <span style ='color:" + rankInten_color + ";'>" + rankInten + " </span></p>");
-                                $("#movie_contents" + i).append("<p class='title'> " + m.boxOfficeResult.dailyBoxOfficeList[i].movieNm + "</p>");
-                                $("#movie_contents" + i).append("<p class='sub'>개봉일자 : " + m.boxOfficeResult.dailyBoxOfficeList[i].openDt + "</p>");
-                                $("#movie_contents" + i).append("<p class='sub'>일일관객 : " + numberWithCommas(m.boxOfficeResult.dailyBoxOfficeList[i].audiCnt) + "(" + numberWithCommas(m.boxOfficeResult.dailyBoxOfficeList[i].audiInten) + ")</p>");
-                                $("#movie_contents" + i).append("<p class='sub'>누적관객 : " + numberWithCommas(m.boxOfficeResult.dailyBoxOfficeList[i].audiAcc) + "</p>");
 
-                            }
+                        var rankInten_color = "gray";
+                        var rankkInten = m.boxOfficeResult.dailyBoxOfficeList[i].rankInten;
+                        var rankInten1 = rankkInten.substr(0, 1);
 
-                        });
+                        if (rankInten1 == "-") {
+                            rankInten_color = "green";
+                            rankInten = "▽" + rankkInten.substr(1, 1);
+                        } else if (rankInten1 == "0") {
+                            rankInten_color = "gray";
+                            rankInten = "-"
+                        } else {
+                            rankInten_color = "red";
+                            rankInten = "▲" + rankkInten;
+                        }
+
+                        // $("#movie_image" + i).append("<a href='https://kobis.or.kr/kobis/business/mast/mvie/searchMovieList.do?dtTp=movie&dtCd=" + m.boxOfficeResult.dailyBoxOfficeList[i].movieCd + "' target='_blank'><img src='" + poster + "' style='width:100px; height:126px;'></a>");
+                        $("#movie_contents" + i).append("<p class='title'> " + m.boxOfficeResult.dailyBoxOfficeList[i].rank + "위   <span style ='color:" + rankInten_color + ";'>" + rankInten + " </span></p>");
+                        $("#movie_contents" + i).append("<p class='title'> " + m.boxOfficeResult.dailyBoxOfficeList[i].movieNm + "</p>");
+                        $("#movie_contents" + i).append("<p class='sub'>개봉일자 : " + m.boxOfficeResult.dailyBoxOfficeList[i].openDt + "</p>");
+                        $("#movie_contents" + i).append("<p class='sub'>일일관객 : " + numberWithCommas(m.boxOfficeResult.dailyBoxOfficeList[i].audiCnt) + "(" + numberWithCommas(m.boxOfficeResult.dailyBoxOfficeList[i].audiInten) + ")</p>");
+                        $("#movie_contents" + i).append("<p class='sub'>누적관객 : " + numberWithCommas(m.boxOfficeResult.dailyBoxOfficeList[i].audiAcc) + "</p>");
+
+                    }
+
+                });
 
 
             document.write("<div class='subject_container'>")
             document.write("<div class='sub_title' id='movie_period'></div>")
             for (i = 0; i < 10; i++) {
                 document.write("<div class='subject'>")
-               // document.write("<div class='item' id='movie_image" + i + "'> </div>");
+                // document.write("<div class='item' id='movie_image" + i + "'> </div>");
                 document.write("<div class='item' id='movie_contents" + i + "'> </div>");
                 document.write("</div>");
             }
@@ -320,7 +377,7 @@
                 url: "https://imdb-api.com/en/API/BoxOffice/k_vaf43v25",
             })
                 .done(function (m) {
-                   console.log(m);
+                    console.log(m);
                     $("#box_period").append("미국 박스오피스 - IMDB<br>");
                     $("#box_period").append("(" + yesterday1 + ")");
                     for (i = 0; i < 10; i++) {
@@ -345,143 +402,122 @@
             document.write("</div>")
         </script>
 
-<script>
-    $.ajax({
-        method: "GET",
-        url: "https://imdb-api.com/en/API/BoxOfficeAllTime/k_vaf43v25",
-    })
-        .done(function (m) {
-            console.log(m);
-            $("#box_alltime_period").append("미국 역대 박스오피스 - IMDB<br>");
-            // $("#box_alltime_period").append("(" + yesterday1 + ")");
-
-
-            $.ajax({
-                method: "GET",
-
-                //url: "http://hopesos.dothome.co.kr/alltimeposter.json"
-                 url: "https://hopesos74.github.io/sch/alltimeposter.json"
-                //url: "alltimeposter.json"
-            })
-                .done(function (p) {
-                    console.log(p);
-
-                    for (i = 0; i < 10; i++) {
-
-                        var id = m.items[i].id;
-                        var poster = p.pageProps.data.alltime[id].url;
-
-                        $("#box_alltime_image" + i).append("<a href='https://www.imdb.com/title/" + m.items[i].id + "' target='_blank'><img src='" + poster + "' style='width:100px; height:126px;'></a>");
-                        $("#box_alltime_contents" + i).append("<p class='title'> " + m.items[i].rank + "위 </p>");
-                        $("#box_alltime_contents" + i).append("<p class='title'> " + m.items[i].title + "</p>");
-                        //   $("#box_alltime_contents" + i).append("<p class='sub'>gross : " + m.items[i].gross + "</p>");
-                        $("#box_alltime_contents" + i).append("<p class='sub'>전세계 총매출액 : " + m.items[i].worldwideLifetimeGross + "</p>");
-                        $("#box_alltime_contents" + i).append("<p class='sub'>year : " + m.items[i].year + "</p>");
-                    }
-                });
-        });
-
-    document.write("<div class='subject_container'>")
-    document.write("<div class='sub_title' id='box_alltime_period'></div>")
-    for (i = 0; i < 10; i++) {
-        document.write("<div class='subject'>")
-        document.write("<div class='item' id='box_alltime_image" + i + "'> </div>");
-        document.write("<div class='item' id='box_alltime_contents" + i + "'> </div>");
-        document.write("</div>");
-    }
-    document.write("</div>")
-    
-</script>
-
-
-
-
-
         <script>
-
-
-
             $.ajax({
                 method: "GET",
-
-                url: "http://cors-anywhere.herokuapp.com/https://aladin.co.kr/ttb/api/ItemList.aspx?ttbkey=ttbhopesos0259002&QueryType=Bestseller&MaxResults=10&start=1&SearchTarget=Book&output=js&Version=20131101",
-
+                url: "https://imdb-api.com/en/API/BoxOfficeAllTime/k_vaf43v25",
             })
                 .done(function (m) {
-                   console.log(m);
-                    $("#book_period").append("도서 주간 베스트셀러 - 알라딘<br>");
-                    $("#book_period").append("(" + sevenday1 + " ~ " + yesterday1 + ")");
-                    for (i = 0; i < 30; i++) {
-                      var pubDate = "" + m.item[i].pubDate + "";
-                        pubDate = pubDate.replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3');
-                        $("#book_image" + i).append("<a href='" + m.item[i].link + "' target='_blank'><img src='" + m.item[i].cover + "'></a>");
-                        $("#book_contents" + i).append("<p class='title'> " + m.item[i].bestRank + "위 </p>");
-                        $("#book_contents" + i).append("<p class='title'> " + m.item[i].title + "</p>");
-                        $("#book_contents" + i).append("<p class='sub'>" + m.item[i].author + "</p>");
-                        $("#book_contents" + i).append("<p class='sub'>" + m.item[i].publisher + "</p>");
-                        $("#book_contents" + i).append("<p class='sub'>" + m.item[i].pubDate + "</p>");
+                    console.log(m);
+                    $("#box_alltime_period").append("미국 역대 박스오피스 - IMDB<br>");
+                    // $("#box_alltime_period").append("(" + yesterday1 + ")");
+
+
+                    $.ajax({
+                        method: "GET",
+
+                        //url: "http://hopesos.dothome.co.kr/alltimeposter.json"
+                        url: "https://hopesos74.github.io/sch/alltimeposter.json"
+                        //url: "alltimeposter.json"
+                    })
+                        .done(function (p) {
+                            console.log(p);
+
+                            for (i = 0; i < 10; i++) {
+                                var id = m.items[i].id;
+                                var poster = p.pageProps.data.alltime[id].url;
+                                $("#box_alltime_image" + i).append("<a href='https://www.imdb.com/title/" + m.items[i].id + "' target='_blank'><img src='" + poster + "' style='width:100px; height:126px;'></a>");
+                                $("#box_alltime_contents" + i).append("<p class='title'> " + m.items[i].rank + "위 </p>");
+                                $("#box_alltime_contents" + i).append("<p class='title'> " + m.items[i].title + "</p>");
+                                //   $("#box_alltime_contents" + i).append("<p class='sub'>gross : " + m.items[i].gross + "</p>");
+                                $("#box_alltime_contents" + i).append("<p class='sub'>전세계 총매출액 : " + m.items[i].worldwideLifetimeGross + "</p>");
+                                $("#box_alltime_contents" + i).append("<p class='sub'>year : " + m.items[i].year + "</p>");
+                            }
+                        });
+                });
+
+            document.write("<div class='subject_container'>")
+            document.write("<div class='sub_title' id='box_alltime_period'></div>")
+            for (i = 0; i < 10; i++) {
+                document.write("<div class='subject'>")
+                document.write("<div class='item' id='box_alltime_image" + i + "'> </div>");
+                document.write("<div class='item' id='box_alltime_contents" + i + "'> </div>");
+                document.write("</div>");
+            }
+            document.write("</div>")
+
+        </script>
+
+        <script>
+            $.ajax({
+                method: "GET",
+                url: "https://hopesos74.github.io/sch/you.json",
+            })
+                .done(function (m) {
+                    console.log(m);
+
+                    const year1 = m.pageProps.year;
+                    const week1 = m.pageProps.week-1;
+
+                    const weekRange = getWeekRange(year1, week1);
+
+
+                    const startDateString = weekRange.startDate.toLocaleDateString();
+                    const endDateString = weekRange.endDate.toLocaleDateString();
+
+                    console.log(`주차 시작일 (금요일): ${startDateString}`);
+                    console.log(`주차 종료일 (목요일): ${endDateString}`);
+
+
+                    $("#youtube_period").append("유투브 주간차트 <br>");
+                    $("#youtube_period").append("(" + startDateString + "~"+ endDateString+")");
+
+
+                    for (i = 0; i < 10; i++) {
+                        var youtube_image = m.pageProps.data[i].song.album.image;
+
+                        var updown_sub = m.pageProps.data[i].previous - m.pageProps.data[i].rank;
+                        var updown_color = "green";
+                        var updown_display = "-";
+                        if (updown_sub > 0) {
+                            updown_color = "red";
+                            updown_display = "⬆";
+                        } else if (updown_sub < 0) {
+                            updown_color = "blue";
+                            updown_display = "⬇";
+                        }
+
+                        $("#youtube_image" + i).append("<a href='https://www.imdb.com/ target='_blank'><img src='" + youtube_image + "' style='width:100px; height:126px;'></a>");
+                        $("#youtube_contents" + i).append("<p class='title'> " + m.pageProps.data[i].rank + "위 <span style ='color:" + updown_color + ";'>(" + m.pageProps.data[i].previous + " " + updown_display + " " + m.pageProps.data[i].rank + ")</span> </p>");
+                        $("#youtube_contents" + i).append("<p class='title'> " + m.pageProps.data[i].song.name + "</p>");
+                        $("#youtube_contents" + i).append("<p class='title'> " + m.pageProps.data[i].song.artists[0].name + "</p>");
+                        $("#youtube_contents" + i).append("<p class='sub'>조회수 : " + numberWithCommas(m.pageProps.data[i].count) + "</p>");
+                        $("#youtube_contents" + i).append("<p class='sub'>앨범병 : " + m.pageProps.data[i].song.album.name + "</p>");
+                        // $("#youtube_contents" + i).append("<p class='sub'>weekend : " + m.items[i].weekend + "</p>");
+                        // $("#youtube_contents" + i).append("<p class='sub'>weeks : " + m.items[i].weeks + "</p>");
                     }
                 });
 
             document.write("<div class='subject_container'>")
-            document.write("<div class='sub_title' id='book_period'></div>")
+            document.write("<div class='sub_title' id='youtube_period'></div>")
 
             for (i = 0; i < 10; i++) {
                 document.write("<div class='subject'>")
-                document.write("<div class='item' id='book_image" + i + "'> </div>");
-                document.write("<div class='item' id='book_contents" + i + "'> </div>");
+                document.write("<div class='item' id='youtube_image" + i + "'> </div>");
+                document.write("<div class='item' id='youtube_contents" + i + "'> </div>");
                 document.write("</div>");
             }
-            document.write("</div>");
-
+            document.write("</div>")
         </script>
+
+
+
+
+
+
+
+
     </div>
-    
-  <script>
-            $.ajax({
-                method: "GET",
-                url: "http://cors-anywhere.herokuapp.com/https://sports.daum.net/prx/hermes/api/team/rank.json?leagueCode=epl&seasonKey=20222023&page=1&pageSize=100",
-
-            })
-                .done(function (m) {
-
-                    console.log(m);
-
-
-
-
-                    $("#pl_period").append("프리미어리그 순위<br>");
-                    $("#pl_period").append("(" + yesterday1 + " 기준)");
-
-                    for (i = 0; i < 20; i++) {
-
-                        // var pubDate = "" + m.item[i].pubDate + "";
-                        // pubDate = pubDate.replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3');
-
-                        // $("#album_rank" + i).append("<p class='rank'>" + m.item[i].rank + "</p>");
-                        $("#pl_image" + i).append("<img src='" + m.list[i].imageUrl + "' style='width:90px; height:90px;'>");
-                        $("#pl_contents" + i).append("<p class='title'> " + m.list[i].rank.rank + "위 </p>");
-                        $("#pl_contents" + i).append("<p class='title'> " + m.list[i].shortName + " 승점" + m.list[i].rank.pts + "</p>");
-                        $("#pl_contents" + i).append("<p class='sub'> " + m.list[i].rank.game + "경기 " + m.list[i].rank.win + "승 " + m.list[i].rank.draw + "무 " + m.list[i].rank.loss + "패 </p>");
-                        $("#pl_contents" + i).append("<p class='sub'> " + m.list[i].rank.gf + "득점 " + m.list[i].rank.ga + "실점 " + m.list[i].rank.gd + "득실 </p>");
-
-                    }
-                });
-
-
-            document.write("<div class='subject_container'>");
-            document.write("<div class='sub_title' id='pl_period'></div>")
-            for (i = 0; i < 10; i++) {
-                document.write("<div class='subject'>")
-                document.write("<div class='item' id='pl_image" + i + "'> </div>");
-                document.write("<div class='item' id='pl_contents" + i + "'> </div>");
-                document.write("</div>");
-            }
-            document.write("</div>");
-
-        </script>
-    
-
 </body>
 
 </html>
