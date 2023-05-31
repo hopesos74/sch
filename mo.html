@@ -469,7 +469,7 @@
                     console.log(`주차 종료일 (목요일): ${endDateString}`);
 
 
-                    $("#youtube_period").append("유투브 주간차트 <br>");
+                    $("#youtube_period").append("YOUTUBE 주간차트 <br>");
                     $("#youtube_period").append("(" + startDateString + "~"+ endDateString+")");
 
 
@@ -477,18 +477,26 @@
                         var youtube_image = m.pageProps.data[i].song.album.image;
 
                         var updown_sub = m.pageProps.data[i].previous - m.pageProps.data[i].rank;
-                        var updown_color = "green";
-                        var updown_display = "-";
+                       
+
                         if (updown_sub > 0) {
                             updown_color = "red";
-                            updown_display = "⬆";
+                            updown_display = "▲";
+                            updown_rank = updown_sub;
+
                         } else if (updown_sub < 0) {
                             updown_color = "blue";
-                            updown_display = "⬇";
+                            updown_display = "▽";
+                            updown_rank = Math.abs(updown_sub);
+                        } else if (updown_sub ==0) {
+                            updown_color = "green";
+                            updown_display = "-";
+                            updown_rank = "";
+
                         }
 
-                        $("#youtube_image" + i).append("<a href='https://www.imdb.com/ target='_blank'><img src='" + youtube_image + "' style='width:100px; height:126px;'></a>");
-                        $("#youtube_contents" + i).append("<p class='title'> " + m.pageProps.data[i].rank + "위 <span style ='color:" + updown_color + ";'>(" + m.pageProps.data[i].previous + " " + updown_display + " " + m.pageProps.data[i].rank + ")</span> </p>");
+                        $("#youtube_image" + i).append("<a href='https://www.youtube.com/results?search_query="+m.pageProps.data[i].song.name +" "+m.pageProps.data[i].song.artists[0].name+"' target='_blank'><img src='" + youtube_image + "' style='width:100px; height:126px;'></a>");
+                        $("#youtube_contents" + i).append("<p class='title'> " + m.pageProps.data[i].rank + "위 <span style ='color:" + updown_color + ";'>" + updown_display + updown_rank + "</span> </p>");
                         $("#youtube_contents" + i).append("<p class='title'> " + m.pageProps.data[i].song.name + "</p>");
                         $("#youtube_contents" + i).append("<p class='title'> " + m.pageProps.data[i].song.artists[0].name + "</p>");
                         $("#youtube_contents" + i).append("<p class='sub'>조회수 : " + numberWithCommas(m.pageProps.data[i].count) + "</p>");
