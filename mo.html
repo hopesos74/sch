@@ -598,6 +598,62 @@
         </script>
 
 
+<script>
+    $.ajax({
+        method: "GET",
+
+        url: "https://hopesos74.github.io/sch/book.json",
+
+    })
+        .done(function (m) {
+             console.log(m);
+
+            $("#aladin_period").append("알라딘 주간 베스트셀러<br>");
+            $("#aladin_period").append("(" + sevenday1 + " ~ " + yesterday1 + ")");
+          //  $("#aladin_period").append("(" + m.pubDate + ")");
+
+            for (i = 0; i < 10; i++) {
+                /*  var updown = m.pageProps.data[i].updown;
+                  var updown1 = updown.substr(0, 1);
+                  var updown_color = "green";
+
+                  if (updown1 == "▲") {
+                      updown_color = "red";
+                  } else if (updown1 == "-") {
+                      updown_color = "gray";
+                  } else if (updown1 == "▽") {
+                      updown_color = "green";
+                  } */
+
+                //   console.log(updown_color);
+
+                $("#aladin_image" + i).append("<a href='" + m.item[i].link + "' target='_blank'><img src=' " + m.item[i].cover + "' ></a>");
+                $("#aladin_contents" + i).append("<p class='title'> " + m.item[i].bestRank + "위   </p>");
+                $("#aladin_contents" + i).append("<p class='title'> " + m.item[i].title + "</p>");
+                $("#aladin_contents" + i).append("<p class='sub'>" + m.item[i].author + "</p>");
+                $("#aladin_contents" + i).append("<p class='sub'>" + m.item[i].publisher + "</p>");
+                $("#aladin_contents" + i).append("<p class='sub'>" + m.item[i].pubDate + "</p>");
+            }
+
+
+        });
+
+
+    document.write("<div class='subject_container'>");
+    document.write("<div class='sub_title' id='aladin_period'></div>")
+    for (i = 0; i < 10; i++) {
+        document.write("<div class='subject'>")
+        document.write("<div class='item' id='aladin_image" + i + "'> </div>");
+        document.write("<div class='item' id='aladin_contents" + i + "'> </div>");
+        document.write("</div>");
+    }
+    document.write("</div>");
+
+</script>
+
+
+
+
 
 
 
