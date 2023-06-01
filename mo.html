@@ -654,6 +654,118 @@
 
         </script>
 
+
+<script>
+    $.ajax({
+        method: "GET",
+
+        url: "https://hopesos74.github.io/sch/netflex_films.json",
+
+    })
+        .done(function (m) {
+            console.log(m);
+
+            const year1 =year;
+            const week1 =week;
+
+            const weekRange = getWeekRange(year1, week1, 1);
+
+
+            const startDateString = weekRange.startDate.toLocaleDateString();
+            const endDateString = weekRange.endDate.toLocaleDateString();
+
+            console.log(`주차 시작일 (금요일): ${startDateString}`);
+            console.log(`주차 종료일 (목요일): ${endDateString}`);
+
+            $("#netflex_period").append("넷플릭스 주간 영화<br>");
+            $("#netflex_period").append("("  + startDateString + "~" + endDateString +  ")");
+            //  $("#aladin_period").append("(" + m.pubDate + ")");
+
+            for (i = 0; i < 10; i++) {
+                var id = m.pageProps.data.weeklyTopTen[i].id;
+                var ne_img = m.pageProps.data.weeklyBoxartUrls[id].vertical;
+                 $("#netflex_image" + i).append("<a href='https://www.netflix.com/kr/title/" + m.pageProps.data.weeklyTopTen[i].showId + "' target='_blank'><img src='" + ne_img + "' style='width:100px; height:140px;'></a>");
+
+               // $("#netflex_image" + i).append("<a href='https://product.kyobobook.co.kr/detail/" + m.data.bestSeller[i].saleCmdtid + "' target='_blank'><img src='https://contents.kyobobook.co.kr/sih/fit-in/300x0/pdt/" + m.data.bestSeller[i].cmdtCode + ".jpg' style='width:100px; height:126px;' ></a>");
+                $("#netflex_contents" + i).append("<p class='title'> " + m.pageProps.data.weeklyTopTen[i].rank + "위   </p>");
+                $("#netflex_contents" + i).append("<p class='title'> " + m.pageProps.data.weeklyTopTen[i].name + "</p>");
+               // $("#netflex_contents" + i).append("<p class='sub'>" + (m.pageProps.data.weeklyTopTen[i].week).replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3') + "</p>");
+                $("#netflex_contents" + i).append("<p class='sub'>WeeksInTop : " + m.pageProps.data.weeklyTopTen[i].weeksInTopTen + " 주</p>");
+            }
+
+
+        });
+
+
+    document.write("<div class='subject_container'>");
+    document.write("<div class='sub_title' id='netflex_period'></div>")
+    for (i = 0; i < 10; i++) {
+        document.write("<div class='subject'>")
+        document.write("<div class='item' id='netflex_image" + i + "'> </div>");
+        document.write("<div class='item' id='netflex_contents" + i + "'> </div>");
+        document.write("</div>");
+    }
+    document.write("</div>");
+
+</script>
+
+
+<script>
+    $.ajax({
+        method: "GET",
+
+        url: "https://hopesos74.github.io/sch/netflextv.json",
+
+    })
+        .done(function (m) {
+            console.log(m);
+
+            const year1 =year;
+            const week1 =week;
+
+            const weekRange = getWeekRange(year1, week1, 1);
+
+
+            const startDateString = weekRange.startDate.toLocaleDateString();
+            const endDateString = weekRange.endDate.toLocaleDateString();
+
+            console.log(`주차 시작일 (금요일): ${startDateString}`);
+            console.log(`주차 종료일 (목요일): ${endDateString}`);
+
+            $("#netflextv_period").append("넷플릭스 주간 TV<br>");
+            $("#netflextv_period").append("("  + startDateString + "~" + endDateString +  ")");
+            //  $("#aladin_period").append("(" + m.pubDate + ")");
+
+            for (i = 0; i < 10; i++) {
+                var id = m.pageProps.data.weeklyTopTen[i].id;
+                var ne_img = m.pageProps.data.weeklyBoxartUrls[id].vertical;
+                 $("#netflextv_image" + i).append("<a href='https://www.netflix.com/kr/title/" + m.pageProps.data.weeklyTopTen[i].showId + "' target='_blank'><img src='" + ne_img + "' style='width:100px; height:140px;'></a>");
+
+               // $("#netflex_image" + i).append("<a href='https://product.kyobobook.co.kr/detail/" + m.data.bestSeller[i].saleCmdtid + "' target='_blank'><img src='https://contents.kyobobook.co.kr/sih/fit-in/300x0/pdt/" + m.data.bestSeller[i].cmdtCode + ".jpg' style='width:100px; height:126px;' ></a>");
+                $("#netflextv_contents" + i).append("<p class='title'> " + m.pageProps.data.weeklyTopTen[i].rank + "위   </p>");
+                $("#netflextv_contents" + i).append("<p class='title'> " + m.pageProps.data.weeklyTopTen[i].name + "</p>");
+               // $("#netflextv_contents" + i).append("<p class='sub'>" + (m.pageProps.data.weeklyTopTen[i].week).replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3') + "</p>");
+                $("#netflextv_contents" + i).append("<p class='sub'> WeeksInTop : " + m.pageProps.data.weeklyTopTen[i].weeksInTopTen + " 주</p>");
+            }
+
+
+        });
+
+
+    document.write("<div class='subject_container'>");
+    document.write("<div class='sub_title' id='netflextv_period'></div>")
+    for (i = 0; i < 10; i++) {
+        document.write("<div class='subject'>")
+        document.write("<div class='item' id='netflextv_image" + i + "'> </div>");
+        document.write("<div class='item' id='netflextv_contents" + i + "'> </div>");
+        document.write("</div>");
+    }
+    document.write("</div>");
+
+</script>
+
+
+
         <!--
         <script>
             $.ajax({
