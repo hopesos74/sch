@@ -538,7 +538,7 @@
                     const year1 = m.pageProps.year;
                     const week1 = m.pageProps.week - 1;
 
-                    const weekRange = getWeekRange(year1, 21, 5);
+                    const weekRange = getWeekRange(year1, 22, 5);
 
 
                     const startDateString = weekRange.startDate.toLocaleDateString();
@@ -613,7 +613,7 @@
                     const year1 =year;
                     const week1 =week;
 
-                    const weekRange = getWeekRange(year1, 21, 3);
+                    const weekRange = getWeekRange(year1, 22, 3);
 
 
                     const startDateString = weekRange.startDate.toLocaleDateString();
@@ -659,7 +659,7 @@
     $.ajax({
         method: "GET",
 
-        url: "https://hopesos74.github.io/sch/netflex_films.json",
+        url: "https://hopesos74.github.io/sch/netflixfilms.json",
 
     })
         .done(function (m) {
@@ -668,7 +668,7 @@
             const year1 =year;
             const week1 =week;
 
-            const weekRange = getWeekRange(year1, 21, 1);
+            const weekRange = getWeekRange(year1, 22, 1);
 
 
             const startDateString = weekRange.startDate.toLocaleDateString();
@@ -714,7 +714,7 @@
     $.ajax({
         method: "GET",
 
-        url: "https://hopesos74.github.io/sch/netflextv.json",
+        url: "https://hopesos74.github.io/sch/netflixtv.json",
 
     })
         .done(function (m) {
@@ -724,7 +724,7 @@
             const week1 =week;
             console.log(week1);
 
-            const weekRange = getWeekRange(year1, 21, 1);
+            const weekRange = getWeekRange(year1, 22, 1);
 
 
             const startDateString = weekRange.startDate.toLocaleDateString();
