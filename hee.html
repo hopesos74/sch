@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>웹 플래시카드 학습기</title>
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --background-color: #f5f7fb;
+            --card-front-bg: #ffffff;
+            --card-back-bg: #4a90e2;
+            --text-front: #333333;
+            --text-back: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-color);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        /* 3D 뒤집기 효과를 위한 컨테이너 설정 */
+        .flashcard-container {
+            perspective: 1000px;
+            width: 100%;
+            height: 300px;
+            cursor: pointer;
+            margin-bottom: 25px;
+        }
+
+        .flashcard {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-radius: 15px;
+        }
+
+        /* 카드가 뒤집혔을 때 적용될 클래스 */
+        .flashcard.flip {
+            transform: rotateY(180deg);
+        }
+
+        /* 앞면 뒷면 공통 스타일 */
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            padding: 20px;
+            box-sizing: border-box;
+            border-radius: 15px;
+            text-align: center;
+            word-break: keep-all;
+            /* 💡 정답이 여러 줄일 때 왼쪽 정렬이 예쁘게 나오도록 수정 (취향에 따라 center로 변경 가능) */
+            text-align: left; 
+            flex-direction: column;
+        }
+
+        /* 앞면 (질문) */
+        .card-front {
+            background-color: var(--card-front-bg);
+            color: var(--text-front);
+            border: 2px solid #e1e8ed;
+            text-align: center; /* 질문은 가운데 정렬 */
+        }
+
+        /* 뒷면 (정답) */
+        .card-back {
+            background-color: var(--card-back-bg);
+            color: var(--text-back);
+            transform: rotateY(180deg);
+            /* 정답이 길어질 경우 카드를 뚫고 나가지 않도록 폰트 크기 조절 및 정렬 */
+            font-size: 1.3rem; 
+            align-items: flex-start; /* 왼쪽 정렬 시작 */
+            justify-content: center; /* 세로 기준 가운데 정렬 */
+            padding-left: 40px; /* 왼쪽 여백 */
+        }
+
+        /* 컨트롤러 버튼 및 페이지 표시 */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background 0.2s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        button:hover {
+            background-color: #357abd;
+        }
+
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .progress {
+            font-size: 1.1rem;
+            color: #666;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>⚡ 플래시카드 학습</h1>
+        
+        <!-- 플래시카드 컴포넌트 -->
+        <div class="flashcard-container" onclick="flipCard()">
+            <div class="flashcard" id="card">
+                <div class="card-face card-front" id="question">질문이 여기에 표시됩니다.</div>
+                <div class="card-face card-back" id="answer">정답이 여기에 표시됩니다.</div>
+            </div>
+        </div>
+
+        <!-- 하단 조작 바 -->
+        <div class="controls">
+            <button id="prevBtn" onclick="prevCard()">이전</button>
+            <div class="progress" id="progress">0 / 0</div>
+            <button id="nextBtn" onclick="nextCard()">다음</button>
+        </div>
+    </div>
+
+    <script>
+        // 1. 학습할 데이터 배열 (원하는 위치에 <br> 태그를 넣어 줄바꿈 하세요!)
+        const flashcardsData = [
+            { 
+                question: "1. 단상 변압기 병렬운전 조건 4가지는?", 
+                answer: "극정임리 <br><br> 1. 극성 일치 <br> 2. 정격전압·권수비 동일 <br> 3. %임피던스 동일 <br> 4. R-X비 동일" 
+            },
+            { 
+                question: "2. 병렬운전 조건 불일치시 주요 현상은?",
+                answer: " 조건이 틀리면 전류가 돌고, 열나고 나눠 못 먹는다. <br><br>극성 : 큰 순환전류 소손 <br> 전압 : 순환전류 가열 <br> %Z : 부하분담 분균형 <br> R-X 비 : 위상차, 동손 증가" 
+            },
+            { 
+                question: "3. 몰드 변압기의 장점 핵심은?", 
+                answer: "자코소내보저   자꾸 손해 보저<br><br> 자기소화 <br> 코로나, 임펄스 강도 <br> 소형경량 <br> 내습, 내구, 내진 <br> 보수용이 <br> 저소음 " 
+            },
+            { 
+                question: "4. 몰드 변압기의 단점은?", 
+                answer: "가서접 <br><br> 1. 고가 <br> 2. 서지대책 필요 <br> 3. 운전중 코일 표면 접촉 위험" 
+
+            }
+        ];
+
+        let currentIndex = 0;
+        const cardElement = document.getElementById('card');
+        const questionElement = document.getElementById('question');
+        const answerElement = document.getElementById('answer');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const progressElement = document.getElementById('progress');
+
+        // 2. 화면에 현재 카드 데이터를 렌더링하는 함수
+        function updateCard() {
+            cardElement.classList.remove('flip');
+            
+            setTimeout(() => {
+                const currentCard = flashcardsData[currentIndex];
+                
+                // 💡 textContent 대신 innerHTML을 사용하여 <br> 태그가 줄바꿈으로 인식되도록 수정했습니다.
+                questionElement.innerHTML = currentCard.question;
+                answerElement.innerHTML = currentCard.answer;
+                
+                progressElement.textContent = `${currentIndex + 1} / ${flashcardsData.length}`;
+                
+                prevBtn.disabled = currentIndex === 0;
+                nextBtn.disabled = currentIndex === flashcardsData.length - 1;
+            }, 150);
+        }
+
+        // 3. 카드 뒤집기 애니메이션 토글
+        function flipCard() {
+            cardElement.classList.toggle('flip');
+        }
+
+        // 4. 다음 카드 이동
+        function nextCard() {
+            if (currentIndex < flashcardsData.length - 1) {
+                currentIndex++;
+                updateCard();
+            }
+        }
+
+        // 5. 이전 카드 이동
+        function prevCard() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateCard();
+            }
+        }
+
+        // 초기 실행 시 첫 번째 카드 로드
+        updateCard();
+    </script>
+</body>
+</html>
