@@ -23,11 +23,11 @@
         /* 뒷면 (정답) - 여러 줄 암기를 위해 왼쪽 정렬 및 가독성 증가 */
         .card-back { background-color: var(--card-back-bg); color: var(--text-back); transform: rotateY(180deg); font-size: 1.2rem; font-weight: 500; align-items: flex-start; justify-content: center; text-align: left; line-height: 1.6; }
         
-        .controls { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; }
-        button { background-color: var(--primary-color); color: white; border: none; padding: 12px 25px; font-size: 1rem; border-radius: 25px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); font-weight: bold; }
+        .controls { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; gap: 8px; }
+        button { background-color: var(--primary-color); color: white; border: none; padding: 10px 18px; font-size: 0.95rem; border-radius: 25px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); font-weight: bold; transition: background-color 0.2s; }
         button:hover { background-color: #0b8043; }
         button:disabled { background-color: #cccccc; cursor: not-allowed; box-shadow: none; }
-        .progress { font-size: 1.1rem; color: #666; font-weight: 500; }
+        .progress { font-size: 1.05rem; color: #666; font-weight: 500; min-width: 60px; text-align: center; }
         
         .status-msg { font-size: 0.9rem; color: #888; margin-top: 15px; }
     </style>
@@ -35,7 +35,7 @@
 <body>
 
     <div class="container">
-        <h1>🟢 구글 시트 플래시카드</h1>
+        <h1>🟢 전기기사 실기 🟢</h1>
         
         <div class="flashcard-container" onclick="flipCard()">
             <div class="flashcard" id="card">
@@ -46,10 +46,11 @@
 
         <div class="controls">
             <button id="prevBtn" onclick="prevCard()" disabled>이전</button>
+            <button id="shuffleBtn" onclick="shuffleCards()" disabled>🔀 섞기</button>
             <div class="progress" id="progress">0 / 0</div>
             <button id="nextBtn" onclick="nextCard()" disabled>다음</button>
         </div>
-        <div class="status-msg">구글 시트에서 내용을 수정하고 페이지를 새로고침하면 실시간 반영됩니다.</div>
+        <div class="status-msg"></div>
     </div>
 
     <script>
@@ -63,6 +64,7 @@
         const answerElement = document.getElementById('answer');
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
+        const shuffleBtn = document.getElementById('shuffleBtn');
         const progressElement = document.getElementById('progress');
 
         async function fetchGoogleSheet() {
@@ -152,6 +154,19 @@
             }
         }
 
+        // 🎲 카드 순서를 무작위로 섞는 함수 (Fisher-Yates 알고리즘)
+        function shuffleCards() {
+            if (flashcardsData.length <= 1) return;
+
+            for (let i = flashcardsData.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [flashcardsData[i], flashcardsData[j]] = [flashcardsData[j], flashcardsData[i]];
+            }
+
+            currentIndex = 0; // 섞은 후 첫 번째 카드로 이동
+            updateCard();
+        }
+
         function updateCard() {
             cardElement.classList.remove('flip');
             
@@ -165,6 +180,7 @@
                 progressElement.textContent = `${currentIndex + 1} / ${flashcardsData.length}`;
                 prevBtn.disabled = currentIndex === 0;
                 nextBtn.disabled = currentIndex === flashcardsData.length - 1;
+                shuffleBtn.disabled = flashcardsData.length <= 1; // 카드가 1장 이하일 경우 섞기 버튼 비활성화
             }, 150);
         }
 
