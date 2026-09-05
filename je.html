@@ -23,11 +23,16 @@
         /* 뒷면 (정답) - 여러 줄 암기를 위해 왼쪽 정렬 및 가독성 증가 */
         .card-back { background-color: var(--card-back-bg); color: var(--text-back); transform: rotateY(180deg); font-size: 1.2rem; font-weight: 500; align-items: flex-start; justify-content: center; text-align: left; line-height: 1.6; }
         
-        .controls { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; gap: 8px; }
-        button { background-color: var(--primary-color); color: white; border: none; padding: 10px 18px; font-size: 0.95rem; border-radius: 25px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); font-weight: bold; transition: background-color 0.2s; }
+        /* 컨트롤 레이아웃: 2줄 배치 */
+        .controls-container { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
+        .controls-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+        
+        button { background-color: var(--primary-color); color: white; border: none; padding: 12px 20px; font-size: 0.95rem; border-radius: 25px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); font-weight: bold; transition: background-color 0.2s, opacity 0.2s; flex: 1; }
+        .controls-row:first-child button { flex: none; width: 110px; } /* 상단 이동 버튼 너비 고정 */
+        
         button:hover { background-color: #0b8043; }
         button:disabled { background-color: #cccccc; cursor: not-allowed; box-shadow: none; }
-        .progress { font-size: 1.05rem; color: #666; font-weight: 500; min-width: 60px; text-align: center; }
+        .progress { font-size: 1.1rem; color: #666; font-weight: bold; flex: 1; text-align: center; }
         
         .status-msg { font-size: 0.9rem; color: #888; margin-top: 15px; }
     </style>
@@ -44,11 +49,18 @@
             </div>
         </div>
 
-        <div class="controls">
-            <button id="prevBtn" onclick="prevCard()" disabled>이전</button>
-            <button id="shuffleBtn" onclick="shuffleCards()" disabled>🔀 섞기</button>
-            <div class="progress" id="progress">0 / 0</div>
-            <button id="nextBtn" onclick="nextCard()" disabled>다음</button>
+        <div class="controls-container">
+            <!-- 첫 번째 줄: 이동 및 진행률 -->
+            <div class="controls-row">
+                <button id="prevBtn" onclick="prevCard()" disabled>이전</button>
+                <div class="progress" id="progress">0 / 0</div>
+                <button id="nextBtn" onclick="nextCard()" disabled>다음</button>
+            </div>
+            <!-- 두 번째 줄: 섞기 및 순서 복원 -->
+            <div class="controls-row">
+                <button id="shuffleBtn" onclick="shuffleCards()" disabled>🔀 섞기</button>
+                <button id="resetOrderBtn" onclick="resetOrder()" disabled>↩️ 원래 순서대로</button>
+            </div>
         </div>
         <div class="status-msg"></div>
     </div>
@@ -56,7 +68,8 @@
     <script>
         const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4BgLP65QxrKYnE-2ytTXTmTP3191EH5-9OckIuluBMxDYB8d_uA1nTVQfgnQRsJb9Lc5Jmq3RQuds/pub?gid=0&single=true&output=csv';
 
-        let flashcardsData = [];
+        let flashcardsData = []; // 현재 표시 중인 카드 배열
+        let originalData = [];   // 원본 순서를 유지하는 저장용 배열
         let currentIndex = 0;
 
         const cardElement = document.getElementById('card');
@@ -65,6 +78,7 @@
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
         const shuffleBtn = document.getElementById('shuffleBtn');
+        const resetOrderBtn = document.getElementById('resetOrderBtn');
         const progressElement = document.getElementById('progress');
 
         async function fetchGoogleSheet() {
@@ -81,31 +95,31 @@
             }
         }
 
-        // ⚙️ [업그레이드] 셀 내부 줄바꿈과 따옴표를 완벽하게 보존하는 고급 CSV 파서
+        // ⚙️ 셀 내부 줄바꿈과 따옴표를 보존하는 고급 CSV 파서
         function parseAdvancedCSV(text) {
             flashcardsData = [];
+            originalData = [];
             const result = [];
             let row = [];
             let cell = '';
             let inQuotes = false;
 
-            // 글자 하나하나 확인하며 큰따옴표 안의 줄바꿈과 쉼표를 보호합니다.
             for (let i = 0; i < text.length; i++) {
                 const char = text[i];
                 const nextChar = text[i+1];
 
                 if (char === '"') {
-                    if (inQuotes && nextChar === '"') { // 큰따옴표연속("") 처리
+                    if (inQuotes && nextChar === '"') {
                         cell += '"';
                         i++;
                     } else {
-                        inQuotes = !inQuotes; // 따옴표 상태 토글
+                        inQuotes = !inQuotes;
                     }
-                } else if (char === ',' && !inQuotes) { // 따옴표 밖의 쉼표 = 열 분리
+                } else if (char === ',' && !inQuotes) {
                     row.push(cell.trim());
                     cell = '';
-                } else if ((char === '\n' || char === '\r') && !inQuotes) { // 따옴표 밖의 엔터 = 행 분리
-                    if (char === '\r' && nextChar === '\n') i++; // \r\n 처리
+                } else if ((char === '\n' || char === '\r') && !inQuotes) {
+                    if (char === '\r' && nextChar === '\n') i++;
                     row.push(cell.trim());
                     if (row.length > 0 && row.some(c => c !== '')) {
                         result.push(row);
@@ -116,7 +130,6 @@
                     cell += char;
                 }
             }
-            // 마지막 남은 데이터 처리
             if (cell || row.length > 0) {
                 row.push(cell.trim());
                 result.push(row);
@@ -124,7 +137,6 @@
 
             if (result.length < 2) return;
 
-            // 헤더 위치 검색 (질문, 정답)
             const headers = result[0];
             let qIndex = headers.findIndex(h => h.includes('질문'));
             let aIndex = headers.findIndex(h => h.includes('정답'));
@@ -132,12 +144,10 @@
             if (qIndex === -1) qIndex = 0;
             if (aIndex === -1) aIndex = 1;
 
-            // 데이터 가공 및 배열 담기
             for (let i = 1; i < result.length; i++) {
                 const currentRow = result[i];
                 if (!currentRow[qIndex] && !currentRow[aIndex]) continue;
 
-                // 셀 내부의 일반 엔터(\n) 기호를 브라우저용 줄바꿈(<br>) 기호로 변환합니다.
                 let question = (currentRow[qIndex] || '').replace(/\n/g, '<br>');
                 let answer = (currentRow[aIndex] || '').replace(/\n/g, '<br>');
 
@@ -147,6 +157,8 @@
             }
 
             if (flashcardsData.length > 0) {
+                // 원본 배열 복사본 보존 (깊은 복사)
+                originalData = JSON.parse(JSON.stringify(flashcardsData));
                 currentIndex = 0;
                 updateCard();
             } else {
@@ -154,7 +166,7 @@
             }
         }
 
-        // 🎲 카드 순서를 무작위로 섞는 함수 (Fisher-Yates 알고리즘)
+        // 🎲 카드 무작위 섞기
         function shuffleCards() {
             if (flashcardsData.length <= 1) return;
 
@@ -163,7 +175,17 @@
                 [flashcardsData[i], flashcardsData[j]] = [flashcardsData[j], flashcardsData[i]];
             }
 
-            currentIndex = 0; // 섞은 후 첫 번째 카드로 이동
+            currentIndex = 0;
+            updateCard();
+        }
+
+        // ↩️ 원본 순서대로 복원
+        function resetOrder() {
+            if (originalData.length === 0) return;
+            
+            // 원본 데이터로 재설정
+            flashcardsData = JSON.parse(JSON.stringify(originalData));
+            currentIndex = 0;
             updateCard();
         }
 
@@ -180,7 +202,10 @@
                 progressElement.textContent = `${currentIndex + 1} / ${flashcardsData.length}`;
                 prevBtn.disabled = currentIndex === 0;
                 nextBtn.disabled = currentIndex === flashcardsData.length - 1;
-                shuffleBtn.disabled = flashcardsData.length <= 1; // 카드가 1장 이하일 경우 섞기 버튼 비활성화
+                
+                const isDisabled = flashcardsData.length <= 1;
+                shuffleBtn.disabled = isDisabled;
+                resetOrderBtn.disabled = isDisabled;
             }, 150);
         }
 
