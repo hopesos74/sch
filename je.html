@@ -8,8 +8,15 @@
         :root { --primary-color: #0f9d58; --background-color: #f5f7fb; --card-front-bg: #ffffff; --card-back-bg: #0f9d58; --text-front: #333333; --text-back: #ffffff; }
         body { font-family: 'Segoe UI', sans-serif; background-color: var(--background-color); margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; }
         .container { text-align: center; width: 100%; max-width: 500px; padding: 20px; box-sizing: border-box; }
-        h1 { color: #333; margin-bottom: 30px; display: flex; align-items: center; justify-content: center; gap: 10px; }
         
+        h1 { color: #333; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        
+        /* ⚙️ 제목 밑 상단 옵션 버튼 영역 */
+        .top-options { display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; }
+        .btn-sub { background-color: #ffffff; color: #555; border: 1px solid #dcdfe6; padding: 6px 14px; font-size: 0.85rem; border-radius: 20px; cursor: pointer; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: all 0.2s; }
+        .btn-sub:hover { background-color: #f2f4f8; color: #0f9d58; border-color: #0f9d58; }
+        .btn-sub:disabled { background-color: #f5f5f5; color: #ccc; border-color: #e0e0e0; cursor: not-allowed; box-shadow: none; }
+
         .flashcard-container { perspective: 1000px; width: 100%; height: 350px; cursor: pointer; margin-bottom: 25px; }
         .flashcard { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-radius: 15px; }
         .flashcard.flip { transform: rotateY(180deg); }
@@ -23,17 +30,13 @@
         /* 뒷면 (정답) - 여러 줄 암기를 위해 왼쪽 정렬 및 가독성 증가 */
         .card-back { background-color: var(--card-back-bg); color: var(--text-back); transform: rotateY(180deg); font-size: 1.2rem; font-weight: 500; align-items: flex-start; justify-content: center; text-align: left; line-height: 1.6; }
         
-        /* 컨트롤 레이아웃: 2줄 배치 */
-        .controls-container { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
-        .controls-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+        /* 하단 컨트롤 영역 (이전 / 진행률 / 다음) */
+        .controls { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; }
+        .btn-main { background-color: var(--primary-color); color: white; border: none; padding: 12px 25px; font-size: 1rem; border-radius: 25px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); font-weight: bold; width: 100px; }
+        .btn-main:hover { background-color: #0b8043; }
+        .btn-main:disabled { background-color: #cccccc; cursor: not-allowed; box-shadow: none; }
         
-        button { background-color: var(--primary-color); color: white; border: none; padding: 12px 20px; font-size: 0.95rem; border-radius: 25px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); font-weight: bold; transition: background-color 0.2s, opacity 0.2s; flex: 1; }
-        .controls-row:first-child button { flex: none; width: 110px; } /* 상단 이동 버튼 너비 고정 */
-        
-        button:hover { background-color: #0b8043; }
-        button:disabled { background-color: #cccccc; cursor: not-allowed; box-shadow: none; }
-        .progress { font-size: 1.1rem; color: #666; font-weight: bold; flex: 1; text-align: center; }
-        
+        .progress { font-size: 1.1rem; color: #666; font-weight: 500; }
         .status-msg { font-size: 0.9rem; color: #888; margin-top: 15px; }
     </style>
 </head>
@@ -42,6 +45,12 @@
     <div class="container">
         <h1>🟢 전기기사 실기 🟢</h1>
         
+        <!-- 🟢 제목 바로 밑으로 이동한 옵션 버튼들 -->
+        <div class="top-options">
+            <button class="btn-sub" id="shuffleBtn" onclick="shuffleCards()" disabled>🔀 섞기</button>
+            <button class="btn-sub" id="resetOrderBtn" onclick="resetOrder()" disabled>↩️ 원래 순서대로</button>
+        </div>
+        
         <div class="flashcard-container" onclick="flipCard()">
             <div class="flashcard" id="card">
                 <div class="card-face card-front" id="question">데이터를 불러오는 중입니다...</div>
@@ -49,18 +58,11 @@
             </div>
         </div>
 
-        <div class="controls-container">
-            <!-- 첫 번째 줄: 이동 및 진행률 -->
-            <div class="controls-row">
-                <button id="prevBtn" onclick="prevCard()" disabled>이전</button>
-                <div class="progress" id="progress">0 / 0</div>
-                <button id="nextBtn" onclick="nextCard()" disabled>다음</button>
-            </div>
-            <!-- 두 번째 줄: 섞기 및 순서 복원 -->
-            <div class="controls-row">
-                <button id="shuffleBtn" onclick="shuffleCards()" disabled>🔀 섞기</button>
-                <button id="resetOrderBtn" onclick="resetOrder()" disabled>↩️ 원래 순서대로</button>
-            </div>
+        <!-- 🟢 하단 컨트롤 (깔끔하게 1줄로 복원) -->
+        <div class="controls">
+            <button class="btn-main" id="prevBtn" onclick="prevCard()" disabled>이전</button>
+            <div class="progress" id="progress">0 / 0</div>
+            <button class="btn-main" id="nextBtn" onclick="nextCard()" disabled>다음</button>
         </div>
         <div class="status-msg"></div>
     </div>
@@ -68,8 +70,8 @@
     <script>
         const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4BgLP65QxrKYnE-2ytTXTmTP3191EH5-9OckIuluBMxDYB8d_uA1nTVQfgnQRsJb9Lc5Jmq3RQuds/pub?gid=0&single=true&output=csv';
 
-        let flashcardsData = []; // 현재 표시 중인 카드 배열
-        let originalData = [];   // 원본 순서를 유지하는 저장용 배열
+        let flashcardsData = [];
+        let originalData = [];
         let currentIndex = 0;
 
         const cardElement = document.getElementById('card');
@@ -157,7 +159,6 @@
             }
 
             if (flashcardsData.length > 0) {
-                // 원본 배열 복사본 보존 (깊은 복사)
                 originalData = JSON.parse(JSON.stringify(flashcardsData));
                 currentIndex = 0;
                 updateCard();
@@ -183,7 +184,6 @@
         function resetOrder() {
             if (originalData.length === 0) return;
             
-            // 원본 데이터로 재설정
             flashcardsData = JSON.parse(JSON.stringify(originalData));
             currentIndex = 0;
             updateCard();
