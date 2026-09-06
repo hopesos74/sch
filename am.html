@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>구글 시트 연동 플래시카드</title>
+    <style>
+        :root { --primary-color: #0f9d58; --background-color: #f5f7fb; --card-front-bg: #ffffff; --card-back-bg: #0f9d58; --text-front: #333333; --text-back: #ffffff; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--background-color); margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; }
+        .container { text-align: center; width: 100%; max-width: 500px; padding: 20px; box-sizing: border-box; }
+        
+        h1 { color: #333; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        
+        /* ⚙️ 제목 밑 상단 옵션 버튼 영역 */
+        .top-options { display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; }
+        .btn-sub { background-color: #ffffff; color: #555; border: 1px solid #dcdfe6; padding: 6px 14px; font-size: 0.85rem; border-radius: 20px; cursor: pointer; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: all 0.2s; }
+        .btn-sub:hover { background-color: #f2f4f8; color: #0f9d58; border-color: #0f9d58; }
+        .btn-sub:disabled { background-color: #f5f5f5; color: #ccc; border-color: #e0e0e0; cursor: not-allowed; box-shadow: none; }
+
+        .flashcard-container { perspective: 1000px; width: 100%; height: 350px; cursor: pointer; margin-bottom: 25px; }
+        .flashcard { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-radius: 15px; }
+        .flashcard.flip { transform: rotateY(180deg); }
+        
+        /* 공통 카드 스타일 */
+        .card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; padding: 30px; box-sizing: border-box; border-radius: 15px; word-break: break-all; overflow-y: auto; }
+        
+        /* 앞면 (질문) - 가운데 정렬 */
+        .card-front { background-color: var(--card-front-bg); color: var(--text-front); border: 2px solid #e1e8ed; align-items: center; justify-content: center; font-size: 1.4rem; font-weight: bold; text-align: center; }
+        
+        /* 뒷면 (정답) - 여러 줄 암기를 위해 왼쪽 정렬 및 가독성 증가 */
+        .card-back { background-color: var(--card-back-bg); color: var(--text-back); transform: rotateY(180deg); font-size: 1.2rem; font-weight: 500; align-items: flex-start; justify-content: center; text-align: left; line-height: 1.6; }
+        
+        /* 하단 컨트롤 영역 (이전 / 진행률 / 다음) */
+        .controls { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; }
+        .btn-main { background-color: var(--primary-color); color: white; border: none; padding: 12px 25px; font-size: 1rem; border-radius: 25px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); font-weight: bold; width: 100px; }
+        .btn-main:hover { background-color: #0b8043; }
+        .btn-main:disabled { background-color: #cccccc; cursor: not-allowed; box-shadow: none; }
+        
+        .progress { font-size: 1.1rem; color: #666; font-weight: 500; }
+        .status-msg { font-size: 0.9rem; color: #888; margin-top: 15px; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🟢 전기기사 실기 🟢</h1>
+        
+        <!-- 🟢 제목 바로 밑으로 이동한 옵션 버튼들 -->
+        <div class="top-options">
+            <button class="btn-sub" id="shuffleBtn" onclick="shuffleCards()" disabled>🔀 섞기</button>
+            <button class="btn-sub" id="resetOrderBtn" onclick="resetOrder()" disabled>↩️ 원래 순서대로</button>
+        </div>
+        
+        <div class="flashcard-container" onclick="flipCard()">
+            <div class="flashcard" id="card">
+                <div class="card-face card-front" id="question">데이터를 불러오는 중입니다...</div>
+                <div class="card-face card-back" id="answer">잠시만 기다려주세요.</div>
+            </div>
+        </div>
+
+        <!-- 🟢 하단 컨트롤 (깔끔하게 1줄로 복원) -->
+        <div class="controls">
+            <button class="btn-main" id="prevBtn" onclick="prevCard()" disabled>이전</button>
+            <div class="progress" id="progress">0 / 0</div>
+            <button class="btn-main" id="nextBtn" onclick="nextCard()" disabled>다음</button>
+        </div>
+        <div class="status-msg"></div>
+    </div>
+
+    <script>
+        const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSYd8bfBoTu_huvXrw75Daobitbn4BOixtDDVTWkpr9r7MwVyIIN75d9dsQdKhHtKQebrUaWTTph76s/pub?gid=1894767551&single=true&output=csv'
+        let flashcardsData = [];
+        let originalData = [];
+        let currentIndex = 0;
+
+        const cardElement = document.getElementById('card');
+        const questionElement = document.getElementById('question');
+        const answerElement = document.getElementById('answer');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const shuffleBtn = document.getElementById('shuffleBtn');
+        const resetOrderBtn = document.getElementById('resetOrderBtn');
+        const progressElement = document.getElementById('progress');
+
+        async function fetchGoogleSheet() {
+            try {
+                const response = await fetch(SHEET_CSV_URL);
+                if (!response.ok) throw new Error('네트워크 응답 실패');
+                
+                const csvText = await response.text();
+                parseAdvancedCSV(csvText);
+            } catch (error) {
+                console.error('Error fetching sheet:', error);
+                questionElement.textContent = "데이터 로드 실패";
+                answerElement.innerHTML = "Live Server 환경에서 실행했는지<br>혹은 깃허브 페이지 주소를 확인해주세요.";
+            }
+        }
+
+        // ⚙️ 셀 내부 줄바꿈과 따옴표를 보존하는 고급 CSV 파서
+        function parseAdvancedCSV(text) {
+            flashcardsData = [];
+            originalData = [];
+            const result = [];
+            let row = [];
+            let cell = '';
+            let inQuotes = false;
+
+            for (let i = 0; i < text.length; i++) {
+                const char = text[i];
+                const nextChar = text[i+1];
+
+                if (char === '"') {
+                    if (inQuotes && nextChar === '"') {
+                        cell += '"';
+                        i++;
+                    } else {
+                        inQuotes = !inQuotes;
+                    }
+                } else if (char === ',' && !inQuotes) {
+                    row.push(cell.trim());
+                    cell = '';
+                } else if ((char === '\n' || char === '\r') && !inQuotes) {
+                    if (char === '\r' && nextChar === '\n') i++;
+                    row.push(cell.trim());
+                    if (row.length > 0 && row.some(c => c !== '')) {
+                        result.push(row);
+                    }
+                    row = [];
+                    cell = '';
+                } else {
+                    cell += char;
+                }
+            }
+            if (cell || row.length > 0) {
+                row.push(cell.trim());
+                result.push(row);
+            }
+
+            if (result.length < 2) return;
+
+            const headers = result[0];
+            let qIndex = headers.findIndex(h => h.includes('질문'));
+            let aIndex = headers.findIndex(h => h.includes('정답'));
+
+            if (qIndex === -1) qIndex = 0;
+            if (aIndex === -1) aIndex = 1;
+
+            for (let i = 1; i < result.length; i++) {
+                const currentRow = result[i];
+                if (!currentRow[qIndex] && !currentRow[aIndex]) continue;
+
+                let question = (currentRow[qIndex] || '').replace(/\n/g, '<br>');
+                let answer = (currentRow[aIndex] || '').replace(/\n/g, '<br>');
+
+                if (question || answer) {
+                    flashcardsData.push({ question, answer });
+                }
+            }
+
+            if (flashcardsData.length > 0) {
+                originalData = JSON.parse(JSON.stringify(flashcardsData));
+                currentIndex = 0;
+                updateCard();
+            } else {
+                questionElement.textContent = "가져올 데이터가 없습니다.";
+            }
+        }
+
+        // 🎲 카드 무작위 섞기
+        function shuffleCards() {
+            if (flashcardsData.length <= 1) return;
+
+            for (let i = flashcardsData.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [flashcardsData[i], flashcardsData[j]] = [flashcardsData[j], flashcardsData[i]];
+            }
+
+            currentIndex = 0;
+            updateCard();
+        }
+
+        // ↩️ 원본 순서대로 복원
+        function resetOrder() {
+            if (originalData.length === 0) return;
+            
+            flashcardsData = JSON.parse(JSON.stringify(originalData));
+            currentIndex = 0;
+            updateCard();
+        }
+
+        function updateCard() {
+            cardElement.classList.remove('flip');
+            
+            setTimeout(() => {
+                if (flashcardsData.length === 0) return;
+                
+                const currentCard = flashcardsData[currentIndex];
+                questionElement.innerHTML = currentCard.question;
+                answerElement.innerHTML = currentCard.answer;
+                
+                progressElement.textContent = `${currentIndex + 1} / ${flashcardsData.length}`;
+                prevBtn.disabled = currentIndex === 0;
+                nextBtn.disabled = currentIndex === flashcardsData.length - 1;
+                
+                const isDisabled = flashcardsData.length <= 1;
+                shuffleBtn.disabled = isDisabled;
+                resetOrderBtn.disabled = isDisabled;
+            }, 150);
+        }
+
+        function flipCard() { if(flashcardsData.length > 0) cardElement.classList.toggle('flip'); }
+        function nextCard() { if (currentIndex < flashcardsData.length - 1) { currentIndex++; updateCard(); } }
+        function prevCard() { if (currentIndex > 0) { currentIndex--; updateCard(); } }
+
+        window.addEventListener('DOMContentLoaded', fetchGoogleSheet);
+    </script>
+</body>
+</html>
